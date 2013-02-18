@@ -2,7 +2,7 @@
 
 ## What is it?
 
-This repository contains code for a **Gazeb**/**ROS** simulation of a
+This repository contains code for a **Gazeb/ROS** simulation of a
 quadrotor using *ARTag* for self-localizzation and navigation.
 
 ## Dependencies
