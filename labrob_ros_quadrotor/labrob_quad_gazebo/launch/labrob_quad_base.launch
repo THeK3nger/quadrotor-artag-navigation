@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- start gazebo with an empty plane -->
+  <param name="/use_sim_time" value="true" />
+
+  <node name="gazebo" pkg="gazebo" type="gazebo"
+    args="$(find labrob_quad_gazebo)/worlds/empty.world -u"
+    respawn="false" output="screen"
+  />
+  
+  <param name="quad_urdf"
+    command="$(find xacro)/xacro.py
+    '$(find labrob_quad_gazebo)/models/quadrotor.xacro'"
+  />
+
+	<node name="spawn_quad0" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param quad_urdf -model quad0 -x 0 -y 0 -z 3"
+	  respawn="false" output="screen"
+	/>
+
+<!-- IF YOU NEED MORE QUADROTORS
+  
+	<node name="spawn_quad1" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param quad_urdf -model quad1 -x 0 -y 1 -z 3"
+	  respawn="false" output="screen"
+	/>
+
+	<node name="spawn_quad2" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param quad_urdf -model quad2 -x 1 -y 0 -z 3"
+	  respawn="false" output="screen"
+	/>
+
+  <param name="kh3_urdf"
+    command="$(find xacro)/xacro.py
+    '$(find labrob_diffDrive3d_description)/urdf/kh3StickMin.xacro'"
+  />
+
+	<node name="spawn_kh31" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param kh3_urdf -model khepera -x 0 -y 0 -z 0.2"
+	  respawn="false" output="screen"
+	/>
+-->
+
+<!-- 
+    kinect camera is actually taken from pr2_description
+    I'm not happy with this choice, maybe we can have our copy
+    of this file  
+
+  <param name="kinect_urdf"
+    command="$(find xacro)/xacro.py
+    '$(find pr2_description)/urdf/sensors/kinect_camera.urdf.xacro'"
+  />
+
+	<node name="spawn_kinect" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param kinect_urdf -model kinect -x 0 -y -3 -z 2.5"
+	  respawn="false" output="screen"
+	/>	
+-->
+
+</launch>
+

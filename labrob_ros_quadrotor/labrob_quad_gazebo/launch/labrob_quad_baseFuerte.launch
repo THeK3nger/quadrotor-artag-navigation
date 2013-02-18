@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="throttled" default="false"/>
+
+  <!-- set use_sim_time flag -->
+  <group if="$(arg use_sim_time)">
+    <param name="/use_sim_time" value="true" />
+  </group>
+
+  <!-- start empty world -->
+  <group>
+      <!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u /home/marco/Documenti/ros_tutorials/empty.world" respawn="false" output="screen"/>-->
+      <!--<node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find gazebo_worlds)/worlds/empty.world" respawn="false" output="screen"/>-->
+      <node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find labrob_quad_gazebo)/worlds/emptyFuerte.world" respawn="false" output="screen"/>
+  </group>
+
+  <!-- start gui -->
+  <group if="$(arg gui)">
+    <node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen"/>
+  </group>
+
+<group if="$(arg gui)">
+  <param name="quad_urdf"
+    command="$(find xacro)/xacro.py
+    '$(find labrob_quad_gazebo)/models/quadrotorWithCameraFuerte.xacro'"
+  />
+  <node name="spawn_quad0" 
+	pkg="gazebo" type="spawn_model"
+	args="-urdf -param quad_urdf -model quad0 -x 0 -y 0 -z 1"
+	respawn="false" output="screen"
+   />
+
+  <!-- send simple cube-->
+    <!--<param name="robot_descriptionCube" command="$(find xacro)/xacro.py '$(find labrob_quad_gazebo)/models/camera.xacro'" />-->
+
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <!--<node name="spawn_robotCube" pkg="gazebo" type="spawn_model"
+          args="-param robot_descriptionCube
+                -urdf
+                -x 0.0
+                -z 0.3
+                -model cube"
+          respawn="false" output="screen" />-->
+
+<!-- start robot state publisher -->
+   <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen" >
+     <remap from="robot_description" to="/quad_urdf" />
+     <param name="publish_frequency" type="double" value="50.0" />
+     <param name="tf_prefix" type="string" value="" />
+   </node>
+
+   <node name="ground_truth_to_tf" pkg="message_to_tf" type="message_to_tf" output="screen">
+     <param name="odometry_topic" value="ground_truth/state" />
+     <param name="frame_id" value="nav" />
+   </node>
+
+</group>
+
+<!-- IF YOU NEED MORE QUADROTORS
+  
+	<node name="spawn_quad1" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param quad_urdf -model quad1 -x 0 -y 1 -z 3"
+	  respawn="false" output="screen"
+	/>
+
+	<node name="spawn_quad2" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param quad_urdf -model quad2 -x 1 -y 0 -z 3"
+	  respawn="false" output="screen"
+	/>
+
+  <param name="kh3_urdf"
+    command="$(find xacro)/xacro.py
+    '$(find labrob_diffDrive3d_description)/urdf/kh3StickMin.xacro'"
+  />
+
+	<node name="spawn_kh31" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param kh3_urdf -model khepera -x 0 -y 0 -z 0.2"
+	  respawn="false" output="screen"
+	/>
+-->
+
+<!-- 
+    kinect camera is actually taken from pr2_description
+    I'm not happy with this choice, maybe we can have our copy
+    of this file  
+
+  <param name="kinect_urdf"
+    command="$(find xacro)/xacro.py
+    '$(find pr2_description)/urdf/sensors/kinect_camera.urdf.xacro'"
+  />
+
+	<node name="spawn_kinect" 
+	  pkg="gazebo" type="spawn_model"
+	  args="-urdf -param kinect_urdf -model kinect -x 0 -y -3 -z 2.5"
+	  respawn="false" output="screen"
+	/>	
+-->
+
+</launch>
+

@@ -1,0 +1,14 @@
+<package>
+  <description brief="usb_camera_test">
+
+     usb_camera_test
+
+  </description>
+  <author>vittorio</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/usb_camera_test</url>
+
+</package>
+
+

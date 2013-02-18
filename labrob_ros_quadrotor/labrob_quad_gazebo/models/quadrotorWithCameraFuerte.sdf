@@ -1,0 +1,513 @@
+<gazebo version='1.0'>
+  <model name='HummingBird' static='0'>
+    <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+    <link name='base_link' gravity='1' self_collide='0' kinematic='0'>
+      <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+      <inertial mass='0.434000' density='1.000000'>
+        <origin pose='-0.000346 0.000000 -0.001106 0.000000 -0.000000 0.000000'/>
+        <inertia ixx='0.000099' ixy='0.000000' ixz='-0.000006' iyy='0.000101' iyz='0.000000' izz='0.000082'/>
+      </inertial>
+      <collision name='base_link_geom' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <mesh filename='/home/marco/repositories/labrobROS/labrob_ros_quadrotor/labrob_quad_gazebo/meshes/quadrotor_baseNoProp.stl' scale='1.000000 1.000000 1.000000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <mesh filename='/home/marco/repositories/labrobROS/labrob_ros_quadrotor/labrob_quad_gazebo/meshes/quadrotor_baseNoProp.dae' scale='1.000000 1.000000 1.000000'/>
+        </geometry>
+        <material script='labrob_materials/Black'/>
+      </visual>
+      <collision name='base_link_geom_arm1' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 -3.141590'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_arm1_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.120000 0.000000 0.000000 0.000000 0.000000 -3.141590'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <material script='Gazebo/Red'/>
+      </visual>
+      <collision name='base_link_geom_arm2' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 -1.570800'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_arm2_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='-0.000000 -0.120000 0.000000 0.000000 0.000000 -1.570800'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <material script='Gazebo/Green'/>
+      </visual>
+      <collision name='base_link_geom_arm3' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_arm3_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='-0.120000 -0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <material script='Gazebo/Red'/>
+      </visual>
+      <collision name='base_link_geom_arm4' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 1.570800'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_arm4_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='-0.000000 0.120000 0.000000 0.000000 -0.000000 1.570800'/>
+        <geometry>
+          <box size='0.160000 0.005000 0.010000'/>
+        </geometry>
+        <material script='Gazebo/Red'/>
+      </visual>
+      <collision name='base_link_geom_quad_IMU_link' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.010000 0.010000 0.002000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_quad_IMU_link_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.010000 0.010000 0.002000'/>
+        </geometry>
+        <material script='Gazebo/Yellow'/>
+      </visual>
+      <collision name='base_link_geom_quad_camera_lens_link' laser_retro='0.000000'>
+        <origin pose='0.005000 0.000000 -0.045000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.005000' length='0.005000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_quad_camera_lens_link_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.005000 0.000000 -0.045000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.005000' length='0.005000'/>
+        </geometry>
+        <material script='Gazebo/Red'/>
+      </visual>
+      <collision name='base_link_geom_quad_camera_link' laser_retro='0.000000'>
+        <origin pose='0.005000 0.000000 -0.040000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.010000' length='0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_quad_camera_link_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.005000 0.000000 -0.040000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.010000' length='0.010000'/>
+        </geometry>
+        <material script='Gazebo/Yellow'/>
+      </visual>
+      <collision name='base_link_geom_quad_sonar_link' laser_retro='0.000000'>
+        <origin pose='-0.017500 0.000000 -0.040000 3.141590 0.000000 3.141590'/>
+        <geometry>
+          <box size='0.005000 0.005000 0.005000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='base_link_geom_quad_sonar_link_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='-0.017500 -0.000000 -0.040000 3.141590 0.000000 3.141590'/>
+        <geometry>
+          <box size='0.005000 0.005000 0.005000'/>
+        </geometry>
+        <material script='Gazebo/Yellow'/>
+      </visual>
+      <sensor name='base_link_camera_sensor' type='depth' always_on='0' update_rate='30.000000' visualize='0'>
+        <origin pose='0.000000 0.000000 -0.040000 3.141593 -1.570793 3.141593'/>
+        <camera>
+          <horizontal_fov angle='0.785398'/>
+          <image width='640' height='480' format='R8G8B8'/>
+          <clip near='0.010000' far='100.000000'/>
+        </camera>
+        <plugin name='base_link_camera_controller' filename='liblabrob_gazebo_camera.so'>
+          <cameraName>camera</cameraName>
+          <setNamespace>1</setNamespace>
+          <alwaysOn>1</alwaysOn>
+          <updateRate>30</updateRate>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>quad_camera_lens_link</frameName>
+        </plugin>
+      </sensor>
+      <sensor name='laser' type='ray' always_on='0' update_rate='10.000000' visualize='0'>
+        <origin pose='-0.015000 0.000000 -0.040000 3.141593 1.570793 3.141593'/>
+        <ray>
+          <scan>
+            <horizontal samples='2' resolution='1.000000' min_angle='-0.000000' max_angle='0.000000'/>
+            <vertical samples='1' resolution='1.000000' min_angle='0.000000' max_angle='0.000000'/>
+          </scan>
+          <range min='0.060000' max='4.000000' resolution='0.000010'/>
+        </ray>
+        <plugin name='gazebo_ros_base_scan_link_controller' filename='liblabrob_gazebo_sonar.so'>
+ 					<updateRate>10.0</updateRate>
+          <setNamespace>1</setNamespace>
+          <gaussianNoiseSigma>0.0</gaussianNoiseSigma>
+          <alwaysOn>1</alwaysOn>
+          <topicName>sonar/scan</topicName>
+          <frameName>base_sonar_quad_link</frameName>
+        </plugin>
+      </sensor>
+    </link>
+    <link name='motor1' gravity='1' self_collide='0' kinematic='0'>
+      <origin pose='0.200000 0.000000 0.010000 0.000000 -0.000000 -3.141590'/>
+      <inertial mass='0.052000' density='1.000000'>
+        <origin pose='0.000000 0.000000 0.000192 0.000000 -0.000000 0.000000'/>
+        <inertia ixx='0.000020' ixy='0.000000' ixz='0.000000' iyy='0.000020' iyz='0.000000' izz='0.000020'/>
+      </inertial>
+      <collision name='motor1_geom' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor1_geom_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <material script='Gazebo/Blue'/>
+      </visual>
+      <collision name='motor1_geom_propeller1' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor1_geom_propeller1_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <material script='Gazebo/Red'/>
+      </visual>
+    </link>
+    <link name='motor2' gravity='1' self_collide='0' kinematic='0'>
+      <origin pose='0.000000 0.200000 0.010000 0.000000 -0.000000 -1.570800'/>
+      <inertial mass='0.052000' density='1.000000'>
+        <origin pose='0.000000 0.000000 0.000192 0.000000 -0.000000 0.000000'/>
+        <inertia ixx='0.000020' ixy='0.000000' ixz='0.000000' iyy='0.000020' iyz='0.000000' izz='0.000020'/>
+      </inertial>
+      <collision name='motor2_geom' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor2_geom_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <material script='Gazebo/Blue'/>
+      </visual>
+      <collision name='motor2_geom_propeller2' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor2_geom_propeller2_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <material script='Gazebo/Blue'/>
+      </visual>
+    </link>
+    <link name='motor3' gravity='1' self_collide='0' kinematic='0'>
+      <origin pose='-0.200000 -0.000000 0.010000 0.000000 -0.000000 0.000000'/>
+      <inertial mass='0.052000' density='1.000000'>
+        <origin pose='0.000000 0.000000 0.000192 0.000000 -0.000000 0.000000'/>
+        <inertia ixx='0.000020' ixy='0.000000' ixz='0.000000' iyy='0.000020' iyz='0.000000' izz='0.000020'/>
+      </inertial>
+      <collision name='motor3_geom' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor3_geom_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <material script='Gazebo/Blue'/>
+      </visual>
+      <collision name='motor3_geom_propeller3' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor3_geom_propeller3_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <material script='Gazebo/Green'/>
+      </visual>
+    </link>
+    <link name='motor4' gravity='1' self_collide='0' kinematic='0'>
+      <origin pose='-0.000000 -0.200000 0.010000 0.000000 -0.000000 1.570800'/>
+      <inertial mass='0.052000' density='1.000000'>
+        <origin pose='0.000000 0.000000 0.000192 0.000000 -0.000000 0.000000'/>
+        <inertia ixx='0.000020' ixy='0.000000' ixz='0.000000' iyy='0.000020' iyz='0.000000' izz='0.000020'/>
+      </inertial>
+      <collision name='motor4_geom' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor4_geom_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <cylinder radius='0.012700' length='0.010000'/>
+        </geometry>
+        <material script='Gazebo/Blue'/>
+      </visual>
+      <collision name='motor4_geom_propeller4' laser_retro='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='1000000000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='motor4_geom_propeller4_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='0.000000 0.000000 0.005000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.180000 0.005000 0.001000'/>
+        </geometry>
+        <material script='Gazebo/White'/>
+      </visual>
+    </link>
+    <joint name='arm_motor1' type='revolute'>
+      <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+      <parent link='base_link'/>
+      <child link='motor1'/>
+      <axis xyz='0.000000 0.000000 1.000000'>
+        <dynamics damping='0.000000' friction='0.000000'/>
+        <limit lower='-10000000000000000.000000' upper='10000000000000000.000000' effort='0.000000' velocity='0.000000'/>
+      </axis>
+    </joint>
+    <joint name='arm_motor2' type='revolute'>
+      <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+      <parent link='base_link'/>
+      <child link='motor2'/>
+      <axis xyz='0.000000 0.000000 1.000000'>
+        <dynamics damping='0.000000' friction='0.000000'/>
+        <limit lower='-10000000000000000.000000' upper='10000000000000000.000000' effort='0.000000' velocity='0.000000'/>
+      </axis>
+    </joint>
+    <joint name='arm_motor3' type='revolute'>
+      <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+      <parent link='base_link'/>
+      <child link='motor3'/>
+      <axis xyz='-0.000000 0.000000 1.000000'>
+        <dynamics damping='0.000000' friction='0.000000'/>
+        <limit lower='-10000000000000000.000000' upper='10000000000000000.000000' effort='0.000000' velocity='0.000000'/>
+      </axis>
+    </joint>
+    <joint name='arm_motor4' type='revolute'>
+      <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+      <parent link='base_link'/>
+      <child link='motor4'/>
+      <axis xyz='-0.000000 0.000000 1.000000'>
+        <dynamics damping='0.000000' friction='0.000000'/>
+        <limit lower='-10000000000000000.000000' upper='10000000000000000.000000' effort='0.000000' velocity='0.000000'/>
+      </axis>
+    </joint>
+    <plugin name='labrob_hubi_plugin' filename='libhubi_controller.so'>
+      <alwaysOn>1</alwaysOn>
+      <update>1000</update>
+      <updateRate>1000.0</updateRate>
+      <armLength>0.16</armLength>
+      <propellerThrust>3.5e-5</propellerThrust>
+      <propellerDrag>7.5e-5</propellerDrag>
+      <motorSpeed>1000.0</motorSpeed>
+      <thrustScale>350.0</thrustScale>
+      <enableAttitudeControl>1</enableAttitudeControl>
+      <enablePositionControl>1</enablePositionControl>
+      <enableAbsoluteError>1</enableAbsoluteError>
+      <selectInput>position</selectInput>
+      <enablePropellers>1</enablePropellers>
+      <recordLog>1</recordLog>
+    </plugin>
+    <plugin name='imu_controller' filename='liblabrob_gazebo_IMU.so'>
+      <robotNamespace>/</robotNamespace>
+      <setNamespace>1</setNamespace>
+      <alwaysOn>1</alwaysOn>
+      <updateRate>50.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>imu_data</topicName>
+      <topicNameVel>imu_vel</topicNameVel>
+      <gaussianNoiseSigma>2.89e-08</gaussianNoiseSigma>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+  </model>
+</gazebo>

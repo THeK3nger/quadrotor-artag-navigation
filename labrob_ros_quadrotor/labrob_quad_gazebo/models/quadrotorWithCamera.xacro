@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+
+<robot  xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+        xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" 
+        xmlns:xacro="http://www.ros.org/wiki/xacro" 
+        name="HummingBird">
+
+<!-- 
+     At this time the robot name is used as prefix for the ros nodes.
+     Common ROS msgs are used (or, to say better, abused...) in order
+     to maintain the largest compatibility.
+     
+     This robot will subscribe the following nodes, according to the
+     selected control input
+        /${model_name}/input/position   (if <selectInput>position</selectInput>)
+          this is a six value vector (geometry_msgs/Twist) containing current
+          and desired position coordinates (x, y, z, x_des, y_des, z_des).
+          You can test this type of input by executing rotopic on a terminal:
+          rostopic pub /quad1/input/position geometry_msgs/Twist
+          '{linear: {x: X_CUR, y: Y_CUR, z: Z_CUR}, angular: {x: X_DES, y: X_DES, z: Z_DES}}'
+          
+        /${model_name}/input/torques    (if <selectInput>torques</selectInput>)
+          this is a four value vector (geometry_msgs/Quaternion) containing
+          torques and thrust references (tx, ty, tz, T)
+          
+        /${model_name}/input/actual     (if <selectInput>actual</selectInput>)
+          this is a four value vector (geometry_msgs/Quaternion) containing 
+          angles and thrust references (roll, pitch, \dot{yaw}, T)
+        
+        /${model_name}/input/serial     (if <selectInput>serial</selectInput>)
+          this is a std::string formatted according to AscTec HummingBird serial
+          communication protocol modified by Sapienza DIIAG LabRob
+-->
+
+<!-- Inclusion of file -->
+<include filename="$(find labrob_quad_gazebo)/models/quadrotor_camera.xacro" />
+<include filename="$(find labrob_quad_gazebo)/models/quadrotor_sonar.xacro" />
+<include filename="$(find labrob_quad_gazebo)/models/quadrotor_IMU.xacro" />
+
+<xacro:property name="id" value="0" />
+
+  <gazebo>
+    <controller:labrob_hubi_controller name="labrob_hubi_controller" plugin="libhubi_controller.so">
+      <alwaysOn>true</alwaysOn>
+      <update>1000</update>
+      <updateRate>1000.0</updateRate>
+      <armLength>${arm_length}</armLength>
+      <propellerThrust>3.5e-5</propellerThrust>
+      <propellerDrag>7.5e-5</propellerDrag>
+      <motorSpeed>1000.0</motorSpeed>
+      <thrustScale>350.0</thrustScale>
+      <enableAttitudeControl>true</enableAttitudeControl>
+      <enablePositionControl>true</enablePositionControl>
+      <enableAbsoluteError>true</enableAbsoluteError>
+      <selectInput>position</selectInput>
+			<enablePropellers>true</enablePropellers>
+			<recordLog>true</recordLog>
+    </controller:labrob_hubi_controller>
+    <canonicalBody>base_link</canonicalBody>
+  </gazebo>
+
+	<!--<gazebo>
+    <controller:gazebo_ros_imu name="imu_controller" plugin="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50.0</updateRate> 
+      <bodyName>imu_mount</bodyName>
+      <topicName>imu_data</topicName>
+      <gaussianNoise>2.89e-08</gaussianNoise>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+      <interface:position name="imu_position"/>
+    </controller:gazebo_ros_imu>
+  </gazebo>-->
+  
+<!-- GENERAL MACROS -->
+<xacro:property name="PI"       value="3.141592653589793" />
+<xacro:property name="HALF_PI"  value="1.570796326794897" />
+
+<!-- MODEL (GEOMETRICAL) MACROS -->
+<xacro:property name="body_size"  value="0.080" />
+
+<xacro:property name="arm_length" value="0.160" />
+<xacro:property name="arm_width"  value="0.005" />
+<xacro:property name="arm_height" value="0.010" />
+<xacro:property name="arm_ori_x"  value="-0.12" />
+
+<xacro:property name="motor_radius" value="0.0127" />
+<xacro:property name="motor_length" value="0.0100" />
+
+<xacro:property name="prop_length" value="0.180" />
+<xacro:property name="prop_width"  value="0.005" />
+<xacro:property name="prop_height" value="0.001" />
+
+<!-- MODEL (PHYSICAL) MACROS -->
+<xacro:property name="body_mass"  value="0.300" />
+<xacro:property name="arm_mass"   value="0.030" />
+<xacro:property name="motor_mass" value="0.050" />
+<xacro:property name="prop_mass"  value="0.002" />
+
+<xacro:property name="sonarOffset"  value="0.015" />
+
+<!-- MODEL (INERTIAL) MACROS -->
+<xacro:macro name="body_inertia">
+  <inertia ixx="1e-5"  ixy="1e-10"  ixz="1e-10" iyy="1e-5" iyz="1e-10" izz="1e-5" />  
+</xacro:macro>
+
+<xacro:macro name="arm_box_inertia">
+  <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+</xacro:macro>
+
+<xacro:macro name="motor_box_inertia">
+  <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+</xacro:macro>
+
+<!-- GAZEBO REFERENCES (FIX THESE) -->
+  <material name="body_color">
+    <color rgba=".1 .1 .1 1.0"/>
+  </material>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="arm1">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="arm2">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="arm3">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="arm4">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="motor1">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="motor2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="motor3">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="motor4">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="propeller1">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="propeller2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="propeller3">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="propeller4">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+
+<!-- ACTUAL ROBOT DESCRIPTION -->
+	<link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${body_size} ${body_size} ${body_size}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="body_color" />
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${body_mass}" />
+      <xacro:body_inertia />
+    </inertial>
+
+    <collision>
+      <geometry>
+        <box size="${body_size} ${body_size} ${body_size}"/>
+      </geometry>
+    </collision>
+  </link>
+  <xacro:arm num="1"/>
+  <xacro:arm num="2"/>
+  <xacro:arm num="3"/>
+  <xacro:arm num="4"/>
+
+<!-- Arm with motor and propeller macro -->
+<xacro:macro name="arm" params="num">
+  <xacro:arm_link    arm_link_num="${num}"/>
+  <xacro:motor          motor_num="${num}"/>
+  <xacro:propeller       prop_num="${num}"/>
+  
+	<joint name="body_arm${num}" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 ${HALF_PI + HALF_PI * num}" />
+		<parent link="base_link"/>
+		<child link="arm${num}"/>
+	</joint>
+
+	<joint name="arm_motor${num}" type="continuous">
+		<origin xyz="-0.20 0 0.01" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+		<parent link="arm${num}" />
+		<child link="motor${num}" />
+	</joint>
+
+	<joint name="motor_prop${num}" type="fixed">
+		<origin xyz="0 0 0.005" rpy="0 0 0" />
+		<parent link="motor${num}" />
+		<child  link="propeller${num}" />
+	</joint>
+</xacro:macro>
+<!-- End of arm macro -->
+
+<!-- Arm sub-macros -->
+<xacro:macro name="arm_box_geometry">
+  <geometry>
+    <box size="${arm_length} ${arm_width} ${arm_height}"/>
+  </geometry>
+</xacro:macro>
+
+<!-- Arm macro -->
+<xacro:macro name="arm_link" params="arm_link_num" >
+	<link name="arm${arm_link_num}">
+    <visual>
+      <origin xyz="${arm_ori_x} 0 0" rpy="0 0 0" />
+      <xacro:arm_box_geometry />
+    </visual>
+
+    <inertial>
+      <mass value="${arm_mass}" />
+      <xacro:arm_box_inertia />
+    </inertial>
+
+    <collision>
+      <xacro:arm_box_geometry />
+    </collision>
+  </link>
+</xacro:macro>
+
+<!-- Motor macro -->
+<xacro:macro name="motor" params="motor_num" >
+	<link name="motor${motor_num}" >
+    <inertial>
+      <mass value="${motor_mass}" />
+      <xacro:motor_box_inertia />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <cylinder radius="${motor_radius}" length="${motor_length}"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 0 1.0 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="${motor_radius}" length="${motor_length}"/>
+      </geometry>
+    </collision>
+  </link>
+</xacro:macro>
+
+<!-- Propeller macro -->
+<xacro:macro name="propeller" params="prop_num">
+	<link name="propeller${prop_num}">
+    <inertial>
+      <mass value="${prop_mass}" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <box size="${prop_length} ${prop_width} ${prop_height}"/>
+      </geometry>
+      <material name="Cyan" />
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="${prop_length} ${prop_width} ${prop_height}"/>
+      </geometry>
+    </collision>
+  </link>
+</xacro:macro>
+<!-- End of arm sub-macros -->
+
+<!-- Camera -->
+<quad_camera parent="base_link">
+	<!-- If the relative yaw of the camera is set to 0, it means that the camera axis are rotated by 90 degrees of yaw (the larger border of the camera is along the y-axis of the quadrotor) -->
+  <origin xyz="0 0 ${-body_size/2}" rpy="0 ${PI/2} ${0}" />
+	<!-- If the relative yaw of the camera is set to 0, it means that the camera axis are on the same line (the larger border of the camera is along the x-axis of the quadrotor) -->
+  <!--<origin xyz="0 0 ${-body_size/2}" rpy="0 ${PI/2} ${PI/2}" />-->
+</quad_camera>
+
+<!-- Sonar -->
+<quad_sonar parent="base_link">
+  <origin xyz="${sonarOffset} 0 ${-body_size/2}" rpy="0 ${PI/2} 0" />
+</quad_sonar>
+
+<!-- IMU -->
+<quad_IMU parent="base_link">
+  <origin xyz="0 0 0" rpy="0 0 0" />
+</quad_IMU>
+
+</robot>
+

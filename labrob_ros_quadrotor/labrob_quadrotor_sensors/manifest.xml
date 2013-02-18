@@ -1,0 +1,23 @@
+<package>
+  <description brief="labrob_quadrotor_sensors">
+
+	This package will include all sensors equipped on our quadrotor developed into DIAG department
+
+  </description>
+  <author>Marco Cognetti</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/labrob_quadrotor_sensors</url>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="gazebo"/>
+  <!--<depend package="gazebo_plugins"/>-->
+  <depend package="cv_bridge" />
+  <depend package="polled_camera" />
+
+  <export>
+    <gazebo plugin_path="${prefix}/lib" />
+  </export>
+</package>
+
+

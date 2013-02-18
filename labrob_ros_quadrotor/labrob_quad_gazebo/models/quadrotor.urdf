@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+
+<!--
+<!--
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!      DEPRECATED    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!! USE THE XACRO FILE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-->
+-->
+
+<robot name="HummingBird">
+  <gazebo>
+    <controller:labrob_hubi_controller name="labrob_hubi_controller" plugin="libhubi_controller.so">
+      <alwaysOn>true</alwaysOn>
+      <update>1000</update>
+      <updateRate>1000.0</updateRate>
+      <armLength>0.16</armLength>
+      <propellerThrust>3.5e-5</propellerThrust>
+      <propellerDrag>7.5e-5</propellerDrag>
+      <motorSpeed>1000.0</motorSpeed>
+      <thrustScale>350.0</thrustScale>
+      <enableAttitudeControl>true</enableAttitudeControl>
+      <enablePositionControl>true</enablePositionControl>
+			<enablePropellers>true</enablePropellers>
+    </controller:labrob_hubi_controller>
+    <canonicalBody>base_link</canonicalBody>
+  </gazebo>
+
+  <material name="body_color">
+    <color rgba=".1 .1 .1 1.0"/>
+  </material>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="arm1">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="arm2">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="arm3">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="arm4">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="motor1">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="motor2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="motor3">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="motor4">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="propeller1">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="propeller2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="propeller3">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="propeller4">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+	<link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.08 0.08 0.08"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="body_color" />
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.3" />
+      <inertia ixx="1e-5"  ixy="0"  ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <collision>
+      <geometry>
+        <box size="0.08 0.08 0.08"/>
+      </geometry>
+    </collision>
+  </link>
+
+<!-- Link 1 -->
+	<link name="arm1"> 
+    <visual>
+      <origin xyz="-0.12 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <collision>
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="motor1" >
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 0 1.0 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="propeller1">
+    <inertial>
+      <mass value="0.002" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <box size="0.18 0.005 0.001"/>
+      </geometry>
+      <material name="Cyan" />
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.15 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<joint name="body_arm1" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 3.141592653589793" />
+		<parent link="base_link"/>
+		<child link="arm1"/>
+	</joint>
+
+	<joint name="arm_motor1" type="continuous">
+		<origin xyz="-0.20 0 0.01" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+		<parent link="arm1" />
+		<child link="motor1" />
+	</joint>
+
+	<joint name="motor_prop1" type="fixed">
+		<origin xyz="0 0 0.005" rpy="0 0 0" />
+		<parent link="motor1" />
+		<child  link="propeller1" />
+	</joint>
+<!-- End of Link 1 -->
+
+<!-- Link 2 -->
+	<link name="arm2"> 
+    <visual>
+      <origin xyz="-0.12 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <collision>
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="motor2" >
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 0 1.0 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="propeller2">
+    <inertial>
+      <mass value="0.002" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <box size="0.18 0.005 0.001"/>
+      </geometry>
+      <material name="Cyan" />
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.15 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<joint name="body_arm2" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 -1.570796326794897" />
+		<parent link="base_link"/>
+		<child link="arm2"/>
+	</joint>
+
+	<joint name="arm_motor2" type="continuous">
+		<origin xyz="-0.20 0 0.01" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+		<parent link="arm2" />
+		<child link="motor2" />
+	</joint>
+
+	<joint name="motor_prop2" type="fixed">
+		<origin xyz="0 0 0.005" rpy="0 0 0" />
+		<parent link="motor2" />
+		<child  link="propeller2" />
+	</joint>
+<!-- End of Link 2 -->
+
+<!-- Link 3 -->
+	<link name="arm3"> 
+    <visual>
+      <origin xyz="-0.12 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <collision>
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="motor3" >
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 0 1.0 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="propeller3">
+    <inertial>
+      <mass value="0.002" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <box size="0.18 0.005 0.001"/>
+      </geometry>
+      <material name="Cyan" />
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.15 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<joint name="body_arm3" type="fixed">
+		<parent link="base_link"/>
+		<child link="arm3"/>
+	</joint>
+
+	<joint name="arm_motor3" type="continuous">
+		<origin xyz="-0.20 0 0.01" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+		<parent link="arm3" />
+		<child link="motor3" />
+	</joint>
+
+	<joint name="motor_prop3" type="fixed">
+		<origin xyz="0 0 0.005" rpy="0 0 0" />
+		<parent link="motor3" />
+		<child  link="propeller3" />
+	</joint>
+<!-- End of Link 3 -->
+
+<!-- Link 4 -->
+	<link name="arm4"> 
+    <visual>
+      <origin xyz="-0.12 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <collision>
+      <geometry>
+        <box size="0.16 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="motor4" >
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 0 1.0 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="0.0127" length="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<link name="propeller4">
+    <inertial>
+      <mass value="0.002" />
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+    </inertial>
+
+    <visual>
+      <geometry>
+        <box size="0.18 0.005 0.001"/>
+      </geometry>
+      <material name="Cyan" />
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.15 0.005 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+	<joint name="body_arm4" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 1.570796326794897" />
+		<parent link="base_link"/>
+		<child link="arm4"/>
+	</joint>
+
+	<joint name="arm_motor4" type="continuous">
+		<origin xyz="-0.20 0 0.01" rpy="0 0 0" />
+		<axis xyz="0 0 1" />
+		<parent link="arm4" />
+		<child link="motor4" />
+	</joint>
+
+	<joint name="motor_prop4" type="fixed">
+		<origin xyz="0 0 0.005" rpy="0 0 0" />
+		<parent link="motor4" />
+		<child  link="propeller4" />
+	</joint>
+<!-- End of Link 4 -->
+</robot>

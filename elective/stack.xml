@@ -1,0 +1,12 @@
+<stack>
+  <description brief="elective">This is a stack to maintain all the packages used by LabRob in dealing with quadrotors./description>
+  <author>Maintained by Lorenzo Rosa</author>
+  <license>BSD</license>  
+  <review status="reviewed" notes="Last review on 16/12/2011"/>
+  <!--url>http://ros.org/wiki/labrob_ros_quadrotor</url-->
+  <depend stack="common_msgs" /> <!-- geometry_msgs -->
+  <depend stack="ipc_bridge_stack" /> <!-- ipc_bridge -->
+  <depend stack="ros" />
+  <depend stack="simulator_gazebo" /> <!-- gazebo_tools, gazebo, gazebo_plugins -->
+
+</stack>

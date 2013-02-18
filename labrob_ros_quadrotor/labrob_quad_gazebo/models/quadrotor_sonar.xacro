@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<robot
+    xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+    xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+    xmlns:xacro="http://www.ros.org/wiki/xacro"
+    xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
+
+	<xacro:property name="quadSonarBodySize" value="0.005" />
+	<xacro:property name="quadSonarBaseMass" value="0.01" />
+
+	<!-- GENERAL MACROS -->
+	<xacro:property name="PI"       value="3.141592653589793" />
+	<xacro:property name="HALF_PI"  value="1.570796326794897" />
+
+  <macro name="quad_sonar" params="parent *origin">
+    <joint name="quad_sonar_mount_joint" type="fixed">
+        <insert_block name="origin" /> 
+        <parent link="${parent}"/>
+        <child link="quad_sonar_link"/>
+				<joint_properties damping="0.0" friction="0.0" />
+    </joint>
+
+    <link name="quad_sonar_link" type="fixed">
+        <inertial>
+            <mass value="${quadSonarBaseMass}"/>
+            <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+        </inertial>
+        
+        <visual>
+            <origin xyz="0 0 ${-quadSonarBodySize/2}" rpy="0 ${PI/2} 0" />
+            <geometry>
+                <box size="${quadSonarBodySize} ${quadSonarBodySize} ${quadSonarBodySize}"/>
+            </geometry>
+        </visual>
+        
+        <collision>
+            <origin xyz="0 0 ${-quadSonarBodySize/2}" rpy="0 ${PI/2} 0" />
+            <geometry>
+                <box size="${quadSonarBodySize} ${quadSonarBodySize} ${quadSonarBodySize}"/>
+            </geometry>
+        </collision>
+    </link>
+
+	 <gazebo reference="quad_sonar_link">
+        <sensor:ray name="laser">
+            <rayCount>   2 </rayCount>
+            <rangeCount> 2 </rangeCount>
+            <laserCount> 1 </laserCount>
+            <origin>0.0 0.0 0.0</origin>
+            <displayRays>false</displayRays>
+            
+            <minAngle>-0.00000001</minAngle>
+            <maxAngle> 0.00000001</maxAngle>
+            
+            <minRange>0.06</minRange>
+            <maxRange>4.0</maxRange>
+            <resRange>0.00001</resRange>
+            <updateRate>10.0</updateRate>
+            
+            <controller:labrob_sonar_controller name="gazebo_ros_base_scan_link_controller" plugin="liblabrob_laser_controller.so">
+								<robotNamespace>/</robotNamespace>
+                <gaussianNoise>0.0</gaussianNoise>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>10.0</updateRate>
+                <topicName>sonar/scan</topicName>
+                <frameName>base_sonar_quad_link</frameName>
+                <interface:laser name="gazebo_ros_base_scan_link_iface"/>
+								<numParent>2</numParent>
+            </controller:labrob_sonar_controller>
+        </sensor:ray>
+    </gazebo>
+
+	<gazebo reference="quad_sonar_link">
+      <material>Gazebo/Yellow</material>
+  </gazebo>
+
+	<gazebo reference="quad_sonar_lens_link">
+      <material>Gazebo/Red</material>
+  </gazebo>
+
+	</macro>
+</robot>

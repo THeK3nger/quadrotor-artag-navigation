@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<robot  xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+        xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" 
+        xmlns:xacro="http://www.ros.org/wiki/xacro" 
+        name="HummingBird">
+
+<!-- 
+     At this time the robot name is used as prefix for the ros nodes.
+     Common ROS msgs are used (or, to say better, abused...) in order
+     to maintain the largest compatibility.
+     
+     This robot will subscribe the following nodes, according to the
+     selected control input
+        /${model_name}/input/position   (if <selectInput>position</selectInput>)
+          this is a six value vector (geometry_msgs/Twist) containing current
+          and desired position coordinates (x, y, z, x_des, y_des, z_des).
+          You can test this type of input by executing rotopic on a terminal:
+          rostopic pub /quad1/input/position geometry_msgs/Twist
+          '{linear: {x: X_CUR, y: Y_CUR, z: Z_CUR}, angular: {x: X_DES, y: X_DES, z: Z_DES}}'
+          
+        /${model_name}/input/torques    (if <selectInput>torques</selectInput>)
+          this is a four value vector (geometry_msgs/Quaternion) containing
+          torques and thrust references (tx, ty, tz, T)
+          
+        /${model_name}/input/actual     (if <selectInput>actual</selectInput>)
+          this is a four value vector (geometry_msgs/Quaternion) containing 
+          angles and thrust references (roll, pitch, \dot{yaw}, T)
+        
+        /${model_name}/input/serial     (if <selectInput>serial</selectInput>)
+          this is a std::string formatted according to AscTec HummingBird serial
+          communication protocol modified by Sapienza DIAG LabRob
+-->
+<xacro:property name="sonarOffset"  value="-0.015" />
+
+<!-- Included URDF Files -->
+<include filename="$(find labrob_quad_gazebo)/models/quadrotorFuerteMacro.xacro" />
+    
+<!-- Instantiate quadrotor_base_macro once (has no parameters atm) -->
+<quadrotor_base_macro />
+
+<include filename="$(find labrob_quad_gazebo)/models/quadrotor_cameraFuerte.xacro" />
+<include filename="$(find labrob_quad_gazebo)/models/quadrotor_IMUFuerte.xacro" />
+<include filename="$(find labrob_quad_gazebo)/models/quadrotor_sonarFuerte.xacro" />
+  
+<!-- CAMERA -->
+<quad_camera parent="base_link">
+	<!-- If the relative yaw of the camera is set to 0, it means that the camera axis are rotated by 90 degrees of yaw (the larger border of the camera is along the y-axis of the quadrotor) -->
+  <origin xyz="0 0 ${-body_size/2}" rpy="0 ${-PI/2} ${0}" />
+	<!-- If the relative yaw of the camera is set to 0, it means that the camera axis are on the same line (the larger border of the camera is along the x-axis of the quadrotor) -->
+  <!--<origin xyz="0 0 ${-body_size/2}" rpy="0 ${PI/2} ${PI/2}" />-->
+</quad_camera>
+
+<!-- IMU -->
+<quad_IMU parent="base_link">
+   <origin xyz="0 0 0" rpy="0 0 0" />
+</quad_IMU>
+
+<!-- Sonar -->
+<quad_sonar parent="base_link">
+  <origin xyz="${sonarOffset} 0 ${-body_size/2}" rpy="0 ${PI/2} 0" />
+</quad_sonar>
+
+</robot>
+

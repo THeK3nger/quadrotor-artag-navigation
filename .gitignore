@@ -1,0 +1,9 @@
+ccny_vision
+output
+usb_cam
+build
+bin
+lib
+*.*~
+*~
+.svn

@@ -1,0 +1,23 @@
+<package>
+  <description brief="HummingBirdController">
+
+     HummingBirdController
+
+  </description>
+  <author>Lorenzo Rosa</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/HummingBirdController</url>
+  <depend package="gazebo"/>
+  <depend package="geometry_msgs"/>
+  <depend package="gazebo_plugins"/>
+  <depend package="ar_pose"/>
+  <!--depend package="ipc_bridge"/-->
+
+  <export>
+    <gazebo plugin_path="${prefix}/lib" />
+  </export>
+
+</package>
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<package>
+  <description>Gazebo world and model files for quadrotors.</description>
+  <author>Lorenzo Rosa</author>
+  <license>BSD</license>
+  <review status="revied" notes="Added camera facing down 10/02/2012"/>
+
+  <!-- depend package="xacro"/ -->
+  <depend package="gazebo"/>
+  <depend package="gazebo_tools"/>
+  <depend package="gazebo_plugins"/>
+
+  <platform os="ubuntu" version="12.04"/>
+</package>
+
+<model>
+  <name>My Robot</name>
+  <version>1.0</version>
+  <sdf>models/quadrotor.sdf</sdf>
+</model>
+

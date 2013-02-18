@@ -1,0 +1,18 @@
+<launch>
+    <!-- Load the world file -->
+    <node name="gazebo" pkg="gazebo" type="gazebo" 
+          args="$(find gazebo_worlds)/worlds/empty.world" output="screen" respawn="false" />
+
+    <!-- send the robot XML to param server -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find labrob_quad_gazebo)/models/quadrotor.urdf'" />
+
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="spawn_robot" pkg="gazebo" type="spawn_model"
+          args="-param robot_description
+                -urdf
+                -z 0.01
+                -model quad"
+          respawn="false" output="screen" />
+
+    
+</launch>

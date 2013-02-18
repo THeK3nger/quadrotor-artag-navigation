@@ -1,0 +1,13 @@
+material elective/pippo
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture pippo.png
+      }
+    }
+  }
+}

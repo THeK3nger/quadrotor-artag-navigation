@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+
+<robot
+    xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+    xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+    xmlns:xacro="http://www.ros.org/wiki/xacro"
+    xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
+
+		<xacro:property name="quadCamBaseRadius" value="0.01" />
+		<xacro:property name="quadCamBaseHeight" value="0.01" />
+
+		<xacro:property name="quadCamLensRadius" value="0.005" />
+		<xacro:property name="quadCamLensHeight" value="0.005" />
+
+	<!-- GENERAL MACROS -->
+	<xacro:property name="PI"       value="3.141592653589793" />
+	<xacro:property name="HALF_PI"  value="1.570796326794897" />
+
+  <macro name="quad_camera" params="parent *origin">
+    <joint name="quad_camera_mount_joint" type="fixed">
+        <insert_block name="origin" /> 
+        <parent link="${parent}"/>
+        <child link="quad_camera_link"/>
+				<joint_properties damping="0.0" friction="0.0" />
+    </joint>
+
+		<link name="quad_camera_link" type="fixed">
+        <inertial>
+            <mass value="0.001"/>
+            <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+        </inertial>
+        
+        <visual>
+            <origin xyz="0 0 ${-quadCamBaseHeight/2}" rpy="0 ${PI/2} 0" />
+            <geometry>
+                <cylinder radius="${quadCamBaseRadius}" length="${quadCamBaseHeight}"/>
+            </geometry>
+        </visual>
+        
+        <collision>
+            <origin xyz="0 0 ${-quadCamBaseHeight/2}" rpy="0 ${PI/2} 0" />
+            <geometry>
+                <cylinder radius="${quadCamBaseRadius}" length="${quadCamBaseHeight}"/>
+            </geometry>
+        </collision>
+    </link>
+
+		<link name="quad_camera_lens_link" type="fixed">
+        <inertial>
+            <mass value="0.001"/>
+            <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+        </inertial>
+        
+        <visual>
+            <origin xyz="${quadCamLensHeight} 0 ${-quadCamLensHeight}" rpy="0 ${PI/2} 0"/>
+            <geometry>
+                <cylinder radius="${quadCamLensRadius}" length="${quadCamLensHeight}"/>
+            </geometry>
+        </visual>
+        
+        <collision>
+            <origin xyz="${quadCamLensHeight} 0 ${-quadCamLensHeight}" rpy="0 ${PI/2} 0"/>
+            <geometry>
+                <cylinder radius="${quadCamLensRadius}" length="${quadCamLensHeight}"/>
+            </geometry>
+        </collision>
+    </link>
+
+		<joint name="quad_camera_base_joint" type="fixed" >
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="quad_camera_link" />
+        <child link="quad_camera_lens_link"/>
+	 	    <joint_properties damping="0.0" friction="0.0" />
+    </joint>
+
+	<gazebo reference="quad_camera_link">
+    <sensor:camera name="cam_sensor">
+        <imageFormat>R8G8B8</imageFormat>
+        <imageSize>320 240</imageSize>
+        <hfov>45</hfov>
+        <nearClip>0.1</nearClip>
+        <farClip>100</farClip>
+        <updateRate>20.0</updateRate>
+        <controller:labrob_gazebo_camera name="cam_controller" plugin="liblabrob_gazebo_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20.0</updateRate>
+						<!--<robotNamespace>/</robotNamespace>-->
+						<numParent>2</numParent>
+            <imageTopicName>ptz/image_raw</imageTopicName>
+            <cameraInfoTopicName>ptz/camera_info</cameraInfoTopicName>
+            <pollServiceName>ptz/request_image</pollServiceName>
+            <frameName>cam_head</frameName>
+            <!--<CxPrime>1224.5</CxPrime>
+            <Cx>1224.5</Cx>
+            <Cy>1025.5</Cy>-->
+            <CxPrime>160</CxPrime>
+            <Cx>160</Cx>
+            <Cy>120</Cy>
+            <!--<focal_length>554</focal_length>-->
+						<!-- From measurement the focal length seems to be 420 -->
+            <distortion_k1>0.0</distortion_k1>
+            <distortion_k2>0.0</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0</distortion_t1>
+            <distortion_t2>0.0</distortion_t2>
+            <interface:camera name="cam_iface" />
+        </controller:labrob_gazebo_camera>
+    </sensor:camera>
+  </gazebo>
+
+	 <!--<gazebo reference="quad_camera_link">
+        <sensor:ray name="laser">
+            <rayCount>   2 </rayCount>
+            <rangeCount> 2 </rangeCount>
+            <laserCount> 1 </laserCount>
+            <origin>0.0 0.0 0.0</origin>
+            <displayRays>false</displayRays>
+            
+            <minAngle>-1</minAngle>
+            <maxAngle> 1</maxAngle>
+            
+            <minRange>0.06</minRange>
+            <maxRange>4.0</maxRange>
+            <resRange>0.001</resRange>
+            <updateRate>10.0</updateRate>
+            
+            <controller:labrob_laser_controller name="gazebo_ros_base_scan_link_controller" plugin="liblabrob_laser_controller.so">
+                <gaussianNoise>0.005</gaussianNoise>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>10.0</updateRate>
+                <topicName>sonar/scan</topicName>
+                <frameName>base_sonar_quad_link</frameName>s
+                <interface:laser name="gazebo_ros_base_scan_link_iface"/>
+            </controller:labrob_laser_controller>
+        </sensor:ray>
+    </gazebo>-->
+
+	<gazebo reference="quad_camera_link">
+      <material>Gazebo/Yellow</material>
+  </gazebo>
+
+	<gazebo reference="quad_camera_lens_link">
+      <material>Gazebo/Red</material>
+  </gazebo>
+
+	</macro>
+</robot>
