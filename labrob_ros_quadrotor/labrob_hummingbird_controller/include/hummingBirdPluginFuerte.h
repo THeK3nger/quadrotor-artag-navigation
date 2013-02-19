@@ -31,6 +31,7 @@ private:
     ros::Subscriber switchSubscriber;
 
 	double arX,arY,arZ;
+	double accX,accY,accZ;
 	double imuX, imuY, imuZ; //velocità letta dalla imu
 	int timer, timerSwitch;
 	int arIndex;

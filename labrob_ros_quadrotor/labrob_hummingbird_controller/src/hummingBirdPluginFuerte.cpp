@@ -453,7 +453,7 @@ void HummingBirdPlugin::position_control() {
   		e_y     = 0.5*(desired_position.y - arY);
   		e_y_dot = y_dot_ref - imuY;
 		if (1){
-			fileName << arX << ";" << arY << ";" << arZ << ";" << current_position.x << ";" << current_position.y << ";" <<current_position.z << ";" << desired_position.x << ";" << desired_position.y << ";" << desired_position.z << endl;
+			fileName << arX+accX << ";" << arY+accY << ";" << arZ+accZ << ";" << current_position.x << ";" << current_position.y << ";" <<current_position.z << ";" << desired_position.x+accX << ";" << desired_position.y+accY << ";" << desired_position.z+accZ << endl;
 		}
   	}
 	
@@ -653,31 +653,38 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 	 //       	
 	 // }
 
-	  if(!switchFlag && arIndex<7){
-			cout<<arIndex<<endl;
-			cout<<switchFlag<<endl;
-			//initial_position.x=msg->markers[arIndex+1].pose.pose.position.y;
-			//initial_position.y=msg->markers[arIndex+1].pose.pose.position.x;
-			//initial_position.z=msg->markers[arIndex+1].pose.pose.position.z;
-			math::Vector3 tmp2;
-			if(markerSearch(arIndex+1, msg, tmp2)){
-				initial_position.x=tmp2.x;
-				initial_position.y=tmp2.y;
-				initial_position.z=tmp2.z;
-			}
-
-	  }else {
+	  if(switchFlag && arIndex<7 && !arFlag){
+		cout<<arIndex<<endl;
+		cout<<switchFlag<<endl;
+		//initial_position.x=msg->markers[arIndex+1].pose.pose.position.y;
+		//initial_position.y=msg->markers[arIndex+1].pose.pose.position.x;
+		//initial_position.z=msg->markers[arIndex+1].pose.pose.position.z;
+		math::Vector3 tmp2;
+		if(markerSearch(arIndex, msg, tmp2)){
+			initial_position.x=tmp2.x;
+			initial_position.y=tmp2.y;
+			initial_position.z=tmp2.z;
+			//accX += -initial_position.x;
+			//accY += -initial_position.y;
+			//accZ += initial_position.z;
 			arFlag = true;
-          }
+		}
+	  }
 
 }
 
 void HummingBirdPlugin::switchCallback(const std_msgs::String::ConstPtr& msg) {
-	arIndex++;
-	switchFlag = true;
-	smoothFlag = true;
-	timerSwitch=timer;
-	
+	if(msg->data=="FORWARD" && arIndex<7){
+		arIndex++;
+		switchFlag = true;
+		smoothFlag = true;
+		timerSwitch=timer;
+	}else if(msg->data=="BACKWARD" && arIndex>0){
+		arIndex--;
+		switchFlag = true;
+		smoothFlag = true;
+		timerSwitch=timer;
+	}
 }
 
 void HummingBirdPlugin::imuCallback(const geometry_msgs::Vector3Stamped::ConstPtr& msg) {
