@@ -73,8 +73,8 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 //	desired_position.y = parent_model->GetLink()->GetWorldPose().pos.y;
 //	desired_position.z = parent_model->GetLink()->GetWorldPose().pos.z;
 
-	desired_position.x = 0.1;
-	desired_position.y = 0.1;
+	desired_position.x = 0;
+	desired_position.y = 0;
 	desired_position.z = 2;
 
 	GPS_position.x = desired_position.x;
