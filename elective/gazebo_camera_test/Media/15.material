@@ -1,4 +1,4 @@
-material elective/pippo
+material elective/15
 {
   technique
   {
@@ -6,7 +6,7 @@ material elective/pippo
     {
       texture_unit
       {
-        texture pippo.png
+        texture 15.png
       }
     }
   }

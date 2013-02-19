@@ -20,7 +20,7 @@
     </collision>
   </link>
   <gazebo reference="ARtag">
-    <material>elective/pippo</material>
+    <material>elective/74</material>
     <turnGravityOff>false</turnGravityOff>
     <static>true</static>
   </gazebo>

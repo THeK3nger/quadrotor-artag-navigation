@@ -1,0 +1,13 @@
+material elective/1
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 1.png
+      }
+    }
+  }
+}
