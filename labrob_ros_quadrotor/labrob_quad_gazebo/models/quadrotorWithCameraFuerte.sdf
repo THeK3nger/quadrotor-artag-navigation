@@ -496,6 +496,7 @@
       <selectInput>position</selectInput>
       <enablePropellers>1</enablePropellers>
       <recordLog>1</recordLog>
+      <artagNumber>7</artagNumber>
     </plugin>
     <plugin name='imu_controller' filename='liblabrob_gazebo_IMU.so'>
       <robotNamespace>/</robotNamespace>
