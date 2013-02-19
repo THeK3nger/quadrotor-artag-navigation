@@ -295,8 +295,8 @@ void HummingBirdPlugin::UpdateChild() {
 				arFlag = false;
 				switchFlag = false;
 				desired_position.z= 2;
-				desired_position.x = 0.1;
-				desired_position.y=0.1;
+				desired_position.x = 0;
+				desired_position.y=0;
 			}else{
 				math::Vector3 tmp = linearInterpol(s);
 				desired_position.z=tmp.z;
@@ -304,7 +304,7 @@ void HummingBirdPlugin::UpdateChild() {
 			       	desired_position.y=tmp.y;
 			}
 		}
-		cout<<desired_position.x<<endl;
+		//cout<<desired_position.x<<endl;
 		update_ground_truth();
 		HighLevelLoop();
 		LowLevelLoop();
@@ -315,8 +315,8 @@ void HummingBirdPlugin::UpdateChild() {
 
 math::Vector3 HummingBirdPlugin::linearInterpol(double s){
 	math::Vector3 result;
-	result.x = 0.1*s+(1-s)*initial_position.x;
-	result.y = 0.1*s+(1-s)*initial_position.y;
+	result.x = 0*s+(1-s)*initial_position.x;
+	result.y = 0*s+(1-s)*initial_position.y;
 	result.z = 2*s+(1-s)*initial_position.z;
 	return result;
 
@@ -638,8 +638,8 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 	  //arY=msg->markers[arIndex].pose.pose.position.x*exp(-diffY)+arY*(1-exp(-diffY));
 	  //arZ=msg->markers[arIndex].pose.pose.position.z*exp(-diffZ)+arZ*(1-exp(-diffZ));
 		arX=tmp.x*exp(-diffX)+arX*(1-exp(-diffX));
-	  arY=tmp.y*exp(-diffY)+arY*(1-exp(-diffY));
-	  arZ=tmp.z*exp(-diffZ)+arZ*(1-exp(-diffZ));
+	  	arY=tmp.y*exp(-diffY)+arY*(1-exp(-diffY));
+	  	arZ=tmp.z*exp(-diffZ)+arZ*(1-exp(-diffZ));
 		}
 
 	 //Naive smoothing
@@ -653,7 +653,9 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 	 //       	
 	 // }
 
-	  if(!switchFlag && arIndex<2){
+	  if(!switchFlag && arIndex<7){
+			cout<<arIndex<<endl;
+			cout<<switchFlag<<endl;
 			//initial_position.x=msg->markers[arIndex+1].pose.pose.position.y;
 			//initial_position.y=msg->markers[arIndex+1].pose.pose.position.x;
 			//initial_position.z=msg->markers[arIndex+1].pose.pose.position.z;

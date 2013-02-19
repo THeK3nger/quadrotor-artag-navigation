@@ -69,9 +69,9 @@
 
 <node name="tag5" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag5.urdf -urdf -z 0.1 -x 2 -model ARtag5" respawn="false" />
 
-<node name="tag6" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag6.urdf -urdf -z 0.1 -x 2 -y 0.5 -Y 1.57 -model ARtag6" respawn="false" />
+<node name="tag6" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag6.urdf -urdf -z 0.1 -x 2 -y 0.5  -model ARtag6" respawn="false" />
 
-<node name="tag7" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag7.urdf -urdf -z 0.1 -x 2 -y 1 -Y 1.57 -model ARtag7" respawn="false" />
+<node name="tag7" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag7.urdf -urdf -z 0.1 -x 2 -y 1  -model ARtag7" respawn="false" />
 
 <node name="ar_pose" pkg="ar_pose" type="ar_multi" respawn="false" output="screen">
 		<param name="marker_pattern_list" type="string" value="$(find gazebo_camera_test)/data/multi"/>
