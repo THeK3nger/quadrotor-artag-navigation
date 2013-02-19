@@ -36,6 +36,7 @@ private:
 	int arIndex;
 	bool arFlag, switchFlag, smoothFlag;
 	std::ofstream fileName;
+    int artagNumber;
 
 	private:
 		double total_mass;

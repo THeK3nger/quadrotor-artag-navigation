@@ -146,6 +146,12 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 	} else {
 		recordLog = false;
 	}
+
+    if (_sdf->HasElement("artagNumber")) {
+        artagNumber = _sdf->GetElement("artagNumber")->GetValueInt();
+    } else {
+        artagNumber = 3;
+    }
 	
 	// Update rate
 	if (!_sdf->HasElement("updateRate"))
