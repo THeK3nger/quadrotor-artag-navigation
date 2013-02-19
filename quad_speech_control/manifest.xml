@@ -1,0 +1,17 @@
+<package>
+  <description brief="quad_speech_control">
+
+     quad_speech_control
+
+  </description>
+  <author>vittorio</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/quad_speech_control</url>
+  <depend package="rospy"/>
+  <depend package="speech_msgs"/>
+  <depend package="std_msgs"/>
+
+</package>
+
+
