@@ -1,0 +1,13 @@
+material elective/40S
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 40S.png
+      }
+    }
+  }
+}

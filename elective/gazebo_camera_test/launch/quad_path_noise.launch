@@ -61,19 +61,19 @@
 
 <node name="tag1" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag.urdf -urdf -z 0.1 -model ARtag1" respawn="false" />
 
-<node name="tag7" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag7.urdf -urdf -z 0.1 -y 0.5 -model ARtag7" respawn="false" />
+<node name="tag7" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag7S.urdf -urdf -z 0.1 -y 0.5 -model ARtag7" respawn="false" />
 
-<node name="tag3" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag3.urdf -urdf -z 0.1 -y 1 -model ARtag3" respawn="false" />
+<node name="tag3" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag3S.urdf -urdf -z 0.1 -y 1 -model ARtag3" respawn="false" />
 
-<node name="tag4" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag4.urdf -urdf -z 0.1 -y 1.5 -model ARtag4" respawn="false" />
+<node name="tag4" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag4S.urdf -urdf -z 0.1 -y 1.5 -model ARtag4" respawn="false" />
 
-<node name="tag5" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag5.urdf -urdf -z 0.1 -y 2 -model ARtag5" respawn="false" />
+<node name="tag5" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag5S.urdf -urdf -z 0.1 -y 2 -model ARtag5" respawn="false" />
 
-<node name="tag6" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag6.urdf -urdf -z 0.1 -y 2 -x 0.5 -model ARtag6" respawn="false" />
+<node name="tag6" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag6S.urdf -urdf -z 0.1 -y 2 -x 0.5 -model ARtag6" respawn="false" />
 
-<node name="tag2" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag2.urdf -urdf -z 0.1 -y 2.5 -x 0.5 -model ARtag2" respawn="false" />
+<node name="tag2" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag2S.urdf -urdf -z 0.1 -y 2.5 -x 0.5 -model ARtag2" respawn="false" />
 
-<node name="tag8" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag8.urdf -urdf -z 0.1 -y 2.5 -x 1.0 -model ARtag8" respawn="false" />
+<node name="tag8" pkg="gazebo" type="spawn_model" args="-file $(find gazebo_camera_test)/urdf/ARtag8S.urdf -urdf -z 0.1 -y 2.5 -x 1.0 -model ARtag8" respawn="false" />
 
 <node name="ar_pose" pkg="ar_pose" type="ar_multi" respawn="false" output="screen">
 		<param name="marker_pattern_list" type="string" value="$(find gazebo_camera_test)/data/multi"/>

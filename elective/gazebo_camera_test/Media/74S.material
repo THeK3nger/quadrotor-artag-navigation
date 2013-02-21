@@ -1,0 +1,13 @@
+material elective/74S
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 74S.png
+      }
+    }
+  }
+}

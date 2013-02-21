@@ -33,6 +33,8 @@ private:
 	double arX,arY,arZ;
 	double accX,accY,accZ;
 	double imuX, imuY, imuZ; //velocità letta dalla imu
+	float tagX[8];
+	float tagY[8];
 	int timer, timerSwitch;
 	int arIndex;
 	bool arFlag, switchFlag, smoothFlag;

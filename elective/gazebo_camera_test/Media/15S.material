@@ -1,0 +1,13 @@
+material elective/15S
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 15S.png
+      }
+    }
+  }
+}

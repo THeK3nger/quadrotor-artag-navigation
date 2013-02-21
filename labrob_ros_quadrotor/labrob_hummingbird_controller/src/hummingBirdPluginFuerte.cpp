@@ -38,6 +38,8 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 	switchFlag = false;
 	timer=0;
 	arIndex=0;
+	tagX={0,0,0,0,0,0.5,0.5,1};
+	tagY={0,0.5,1,1.5,2,2,2.5,2.5};
 	if (!parent_model) gzthrow("Maybe all the controllers requires a Model as their parent");
 	
 	// Initialize references
@@ -453,7 +455,7 @@ void HummingBirdPlugin::position_control() {
   		e_y     = 0.5*(desired_position.y - arY);
   		e_y_dot = y_dot_ref - imuY;
 		if (1){
-			fileName << arX+accX << ";" << arY+accY << ";" << arZ+accZ << ";" << current_position.x << ";" << current_position.y << ";" <<current_position.z << ";" << desired_position.x+accX << ";" << desired_position.y+accY << ";" << desired_position.z+accZ << endl;
+			fileName << arX+tagX[arIndex] << ";" << arY+tagY[arIndex] << ";" << arZ << ";" << current_position.x << ";" << current_position.y << ";" <<current_position.z << ";" << desired_position.x+tagX[arIndex] << ";" << desired_position.y+tagY[arIndex] << ";" << desired_position.z << endl;
 		}
   	}
 	
