@@ -1,6 +1,8 @@
 
 #include <hummingBirdPluginFuerte.h>
 #include <ar_pose/ARMarkers.h>
+#include <stdlib.h>
+#include <math.h>
 
 using std::cout;
 using std::endl;
@@ -32,6 +34,7 @@ HummingBirdPlugin::~HummingBirdPlugin() {
 // Load the controller
 void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 	// Get and check the parent model
+	srand(time(NULL));
 	parent_model = _parent;
 	world        = _parent->GetWorld();
 	arFlag = false;
@@ -394,7 +397,8 @@ void HummingBirdPlugin::height_Control_gravity_comp() {
 	timer++;
 	// p_gain[2] is equal to 25.0
 	// d_gain[2] is equal to 10.0
-
+	
+	
 	//if (1){
 	if (timer<5000){
     	//cout<<"Z: "<<arZ-current_position.z<<endl;  
@@ -403,7 +407,7 @@ void HummingBirdPlugin::height_Control_gravity_comp() {
 		         total_mass * GRAV;
 	}else{
 		//cout<<"5000"<<endl;
-		Thrust = p_gain[2]  * 0.5*(desired_position.z - arZ) +
+		Thrust = p_gain[2]  * 0.5*(desired_position.z - arZ) + 
 		         d_gain[2]  * (0 - imuZ) +
 		         total_mass * GRAV;
 	}
@@ -655,7 +659,7 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 	 //       	
 	 // }
 
-	  if(switchFlag && arIndex<7 && !arFlag){
+	  if(switchFlag && arIndex<8 && !arFlag){
 		cout<<arIndex<<endl;
 		cout<<switchFlag<<endl;
 		//initial_position.x=msg->markers[arIndex+1].pose.pose.position.y;
@@ -676,7 +680,7 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 }
 
 void HummingBirdPlugin::switchCallback(const std_msgs::String::ConstPtr& msg) {
-	if(msg->data=="FORWARD" && arIndex<7){
+	if(msg->data=="FORWARD" && arIndex<8){
 		arIndex++;
 		switchFlag = true;
 		smoothFlag = true;
@@ -767,6 +771,20 @@ void HummingBirdPlugin::update_ground_truth() {
 
 
 // Auxiliar functions
+
+float HummingBirdPlugin::gaussianError(){	
+	float i,j;
+	i=(rand()+1.0)/RAND_MAX;
+	j=(rand()+1.0)/RAND_MAX;
+	
+	
+
+	float error = sqrt(-2*log(i))*cos(2*M_PI*j);
+	
+	cout << i << ";" << j << ";" << error << endl;
+	return error;
+}
+
 double HummingBirdPlugin::zero_check(double v){
 	if(v > -MY_ZERO && v < MY_ZERO) return 0.0;
 	else return v;
@@ -775,9 +793,9 @@ double HummingBirdPlugin::zero_check(double v){
 bool HummingBirdPlugin::markerSearch(int id, const ar_pose::ARMarkers::ConstPtr& msg, math::Vector3& markerPose){
 	for(int i=0; i<msg->markers.size(); i++){
 		if(id==msg->markers[i].id){
-			markerPose.x = msg->markers[i].pose.pose.position.y;
-			markerPose.y = msg->markers[i].pose.pose.position.x;
-			markerPose.z = msg->markers[i].pose.pose.position.z;
+			markerPose.x = msg->markers[i].pose.pose.position.y+0.05*gaussianError();
+			markerPose.y = msg->markers[i].pose.pose.position.x+0.05*gaussianError();
+			markerPose.z = msg->markers[i].pose.pose.position.z+0.05*gaussianError();
 			return true;
 		}
 	}

@@ -148,6 +148,9 @@ private:
 		void artagCallback(const ar_pose::ARMarkers::ConstPtr& msg);
 		void imuCallback(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
 
+		//Auxiliary function
+		float gaussianError();
+
 		math::Vector3 linearInterpol(double s);
 		bool markerSearch(int id, const ar_pose::ARMarkers::ConstPtr& msg, math::Vector3& markerPose);
 
