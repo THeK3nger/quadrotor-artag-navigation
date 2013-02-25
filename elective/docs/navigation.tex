@@ -1,5 +1,17 @@
 \section{Navigation}
 
-scambio riferimenti
-iterpolazione
-(smoothin stima cenni)
+\subsection{The navigation problem}
+
+Now that our quadrotor know how to do hovering on a single tag, it is time to
+add more tags to make possible for it to follow a path.
+
+The quadrotor maintains a list of the existent tags and a pointer (usually an
+integer index) to the current active tag. At any time we can order a change of quadrotor active tag 
+and see it move towards the selected new active one.
+
+In our simulation we use a simple sequential path: the robot can follow only
+one direction, forward or backward. In general more complex path can be created
+(i.g. a tree-like path). The only limitation is that the quadrotor 
+
+\subsection{Tag switch sequence}
+

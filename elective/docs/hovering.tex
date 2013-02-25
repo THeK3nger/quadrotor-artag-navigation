@@ -15,7 +15,7 @@ data:
         of IMU sensor data and an optical flow on the camera input.
 \end{itemize}
 
-The quadrotor must use this input to stay in a fixed position respect to the
+The quadrotor must use this input to stay in a fixed position whit respect to the
 current active tag. In fact we assume that the desired position is expressed in
 the active tag reference frame regardless of the real position in world
 coordinates 
@@ -27,7 +27,7 @@ not know the real position of the tag in the world frame.
 \subsection{Position estimation}
 
 As we said the main sensor input for the quadrotor localization comes from the
-ARTag pose estimation from the camera. These values represent an approximation
+ARTag pose estimation of the camera. These values represent an approximation
 of the real quadrotor position in a reference frame centered in the active tag.
 
 However the input of ARTag cannot be used directly as reference for the PD
@@ -47,5 +47,3 @@ where
 \end{equation}
 
 and $k$ is just a real negative constant called \emph{smooth factor}.
-
-funzione PD riferimenti smoothing stima
