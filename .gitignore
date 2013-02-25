@@ -7,3 +7,10 @@ lib
 *.*~
 *~
 .svn
+*.aux
+*.pdf
+*.out
+*.log
+*.synctex.gz
+*.pyc
+*.pyo
