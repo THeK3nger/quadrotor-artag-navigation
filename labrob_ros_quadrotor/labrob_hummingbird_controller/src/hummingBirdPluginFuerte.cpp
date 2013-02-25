@@ -48,7 +48,7 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 	// Initialize references
 	roll_ref   = 0;
 	pitch_ref  = 0;
-	yaw_ref    = 0;
+	yaw_ref    = 0; //M_PI/2.0;
 	thrust_ref = 0;
 	
 	// Initialize PID gains sets: old gains for ROS electric
@@ -374,9 +374,11 @@ void HummingBirdPlugin::attitude_control() {
 		break;
 		default:
 			// Modified to respect the real robot control mode: yaw input = 0 maintains current yaw
+			// CONTROLLO YAW????
 			p_error.x = zero_check(roll_ref  - current_rotation_euler.x);
 			p_error.y = zero_check(pitch_ref - current_rotation_euler.y);
 			p_error.z = zero_check(yaw_ref   - current_rotation_euler.z);
+			cout << p_error.z << endl;
 			
 			v_error = current_rotation_vel;
 			
@@ -626,7 +628,7 @@ if (Thrust < 0) Thrust = 0;
 }
 
 // 	
-// 	/***************************************************************/
+// 	/********************************************************C*******/
 // 	/*                                                             */
 // 	/*  this is called at every update simulation step             */
 // 	/*                                                             */
@@ -776,12 +778,9 @@ float HummingBirdPlugin::gaussianError(){
 	float i,j;
 	i=(rand()+1.0)/RAND_MAX;
 	j=(rand()+1.0)/RAND_MAX;
-	
-	
 
 	float error = sqrt(-2*log(i))*cos(2*M_PI*j);
-	
-	cout << i << ";" << j << ";" << error << endl;
+
 	return error;
 }
 
