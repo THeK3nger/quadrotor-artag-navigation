@@ -2,16 +2,44 @@
 
 \subsection{The navigation problem}
 
-Now that our quadrotor know how to do hovering on a single tag, it is time to
+Now that our quadrotor know how to do hovering on a single point, it is time to
 add more tags to make possible for it to follow a path.
 
-The quadrotor maintains a list of the existent tags and a pointer (usually an
-integer index) to the current active tag. At any time we can order a change of quadrotor active tag 
-and see it move towards the selected new active one.
+The quadrotor maintains a list of the existent tags ($S = (s_1,...,s_n)$) and
+a pointer (usually an integer index) to the current active tag. At any time we
+can order a change of quadrotor active tag and see it move towards the selected
+new active one.
 
 In our simulation we use a simple sequential path: the robot can follow only
 one direction, forward or backward. In general more complex path can be created
-(i.g. a tree-like path). The only limitation is that the quadrotor 
+(for example a tree-like path). The only limitation is that the quadrotor
+camera must see every possible next tag.
 
 \subsection{Tag switch sequence}
 
+The most critical aspect of tag navigation is the \emph{tag switching}
+sequence. This sequence is composed by three parts:
+
+\begin{enumerate}
+    \item Search for the next tag. Suppose that the quadrotor active tag is
+        $s_i$ and the next desired tag is $s_j$. In that case the algorithm
+        will search for tag $s_j$ in the camera image still using $s_i$ as
+        reference tag.
+    \item Switch the active target to $s_j$ updating the desired position
+        according to the offset between $s_i$ and $s_j$. This is important
+        because switching the active target changes the reference frame of the
+        quadrotor and introduces a sensible instant error in the controller
+        input. The new desired position is chosen such that position error is
+        zero in the switch instant.
+    \item Drag the desired position back to its original value.
+\end{enumerate}
+
+In our project the point 3 is achieved with a simple linear interpolation:
+
+\begin{equation}
+    \boldsymbol{d}(t) = \boldsymbol{d}_f \frac{t-t_0}{T} + (1-\frac{t-t_0}{T})\boldsymbol{d}_i\:\:\: \text{for}\, t_0 \le t \le t_0+T
+\end{equation}
+
+where $t_0$ is the instant in which the switching begin, $T$ is the switching
+duration, and $\boldsymbol{d}_i$ and $\boldsymbol{d}_f$ is the starting and
+final position.
