@@ -16,3 +16,4 @@ lib
 *.pyo
 *.bbl
 *.blg
+.classpath

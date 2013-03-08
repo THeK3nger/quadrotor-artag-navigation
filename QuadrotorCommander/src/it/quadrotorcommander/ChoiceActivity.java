@@ -52,23 +52,27 @@ public class ChoiceActivity extends Activity {
         		System.out.println(choice);
         		if(lcmBound){
         			switch (choice) {
-        				case R.id.radio0 : lcmService.publishMessage("CHOICE", "forward");
+        				case R.id.radio0 : lcmService.publishMessage("CHOICE", "FORWARD");
         					break;
-        				case R.id.radio1 : lcmService.publishMessage("CHOICE", "back");
+        				case R.id.radio1 : lcmService.publishMessage("CHOICE", "BACKWARD");
         					break;
-        				case R.id.radio2 :lcmService.publishMessage("CHOICE", "stop");
+        				case R.id.radio2 :lcmService.publishMessage("CHOICE", "STOP");
         					break;
-        				case R.id.radio3 :lcmService.publishMessage("CHOICE", "beginning");
+        				case R.id.radio3 :lcmService.publishMessage("CHOICE", "BEGIN");
     						break;
-        				case R.id.radio4 :lcmService.publishMessage("CHOICE", "end");
+        				case R.id.radio4 :lcmService.publishMessage("CHOICE", "END");
     						break;
         			}
-        			//lcmService.publishMessage("ASD", "hello");
-        			//finish();
+        			finish();
         		}
         	}	
         }
 		);
+	}
+	
+	@Override
+	public void onBackPressed(){
+		//muahahah
 	}
 
 	@Override
