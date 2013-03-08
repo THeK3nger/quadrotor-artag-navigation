@@ -1,30 +1,34 @@
 \section{Intro}
 
-In this work we implemented a speech control system for a quadrotor. The speech
-interface was implemented using an Android tablet while the controller using
-ROS; LCM\footnote{lcm.googlecode.com} was used to enable the tablet to exchange
-messages with ROS, and the whole system was simulated using Gazebo.
+In this work we implemented a quadrotor control system based on visual features;
+on top of it we enabled the robot to execute spoken command through a voice
+user interface (VUI). The navigation system was implemented using ROS while the
+speech interface using an Android tablet; LCM\footnote{lcm.googlecode.com} was
+used to enable the tablet to exchange messages with ROS, and the whole system
+was simulated using Gazebo.
 
-The three main component of our system are the voice interface, the controller
-of the robot and the sensor. The voice interface takes as input high-level
-spoken commands, such as ``go to the next marker'', handles the uncertainty
-introduced by the speech recognizer and labels it as one of five possible
-commands; the command inferred is then transformed in low-level goals for the
-controller.
+% The experimental set up used in our simulations
+%consists of a quadrotor, with a camera facing downward, a set of markers the
+%robot has to follow and a tablet to give commands to the quadrotor. 
 
- To control the robot we used a simple PID, therefore both the
-velocity and the position of the robot are needed to control the quadrotor; the
-first is obtained by the IMU mounted on board while the second is estimated
-using the camera. To obtain an accurate estimate of the quadrotor's position we
-resorted to ARTag \cite{ARTag}; this software, originally developed for
-augmented reality, is able to estimate the position of a camera with respect to
-known markers with very little error ($\pm$2cm). In our system the camera
-mounted on the quadrotor faces downward and several markers are placed on the
-floor to allow the quadrotor to follow a predefined path by flying from one
-marker to the other.  
+The three main component of our system are the controller of the robot, the
+sensor and the voice interface. To control the robot we used a simple PD,
+therefore both the velocity and the position of the robot are needed to control
+the quadrotor; the first is obtained by the IMU mounted on board while the
+second is estimated using the camera. To obtain an accurate estimate of the
+quadrotor's position usinig only the camera as senor we resorted to ARTag
+\cite{ARTag}; this software, originally developed for augmented reality, is
+able to estimate the position of a camera with respect to known markers with
+very little error ($\pm$2cm). In our system the camera mounted on the quadrotor
+faces downward and several markers are placed on the floor to allow the
+quadrotor to follow a predefined path by flying from one marker to the other.
+The voice interface takes as input high-level spoken commands, such as ``go to
+the next marker'', handles the uncertainty introduced by the speech recognizer
+and labels it as one of five possible commands; the command inferred is then
+transformed in low-level goals for the controller.
 
-To evaluate the approach proposed we simulated the
-quadrotor in a 3D environment using Gazebo. Given the almost-ideal results
-obtained in the first tests we proceeded to add some artificial noise in the
-simulation; the system proved to be quite robust to the noise introduced and
-therefore we believe this approach could be adopted on a real robot as well.
+To evaluate the approach proposed we simulated the quadrotor in a 3D
+environment using Gazebo. Given the almost-ideal results obtained in the first
+tests we proceeded to add some artificial noise in the simulation; the system
+proved to be quite robust to the noise introduced and therefore we believe this
+approach could be adopted on a real robot as well.
