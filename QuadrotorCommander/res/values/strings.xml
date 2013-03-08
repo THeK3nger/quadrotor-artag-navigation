@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">QuadrotorCommander</string>
+    <string name="ip_input">Insert the IP adress of the robot</string>
+    <string name="menu_settings">Settings</string>
+    <string name="START">Connect</string>
+    <string name="title_activity_sciocca">ScioccaActivity</string>
+    <string name="choice_text">Select one:</string>
+    <string name="buttonChoice">Send</string>
+    <string name="quadPicture">immagine</string>
+    <string name="speech_text">Push the button to interact</string>
+    <string name="title_activity_speech">SpeechActivity</string>
+
+</resources>
