@@ -43,7 +43,7 @@ class bag_of_words:
 			p= (self.dictionary[w][l]+self.ls)/(self.labels[l][1]+self.ls*len(self.dictionary))
 		else:
 			#laplacian smoothing??
-			p= (1.0/len(self.labels))/self.labels[l][1]		
+			p= (1.0/len(self.labels))#/self.labels[l][1]		
 		return p
 	
 	def p_of_label(self, l):

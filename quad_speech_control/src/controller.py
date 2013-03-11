@@ -18,7 +18,7 @@ class Controller:
 		self.pub = rospy.Publisher('/ar_marker_switch', String)
 		self.speechPub = rospy.Publisher('/text_to_speech', String)
 		self.subscription = self.lc.subscribe("CHOICE", self.lcmCallback)
-		rospy.Subscriber("speech_results", Speech, self.rosCallback)
+		rospy.Subscriber("/speech_results", Speech, self.rosCallback)
 
 
 	def rosCallback(self, data):
@@ -26,10 +26,13 @@ class Controller:
 		self.lastMsg = data
 		for i in data.msg:
 			dictionary = self.bag.infer_label(i)
+			print dictionary
 			label = max(dictionary, key=lambda x: dictionary[x])
 			result.append((label, dictionary[label]))
 		msg = max(result, key=lambda x: x[1])[0]
-		if max(result, key=lambda x: x[1])[1] < 0.8:
+		print result
+		print "CONFIDENCE: "+ str(max(result, key=lambda x: x[1])[1])
+		if max(result, key=lambda x: x[1])[1] < 0.7:
 			fake = ''
 			self.lc.publish("CONTROL", fake)
 			self.speechPub.publish("I did not understand, select one of the following")

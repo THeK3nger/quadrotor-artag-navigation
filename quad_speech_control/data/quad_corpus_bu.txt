@@ -1,0 +1,117 @@
+go for work FORWARD
+go forward FORWARD
+go back BACKWARD
+go back to BACKWARD
+backwards BACKWARD
+Mac BACKWARD
+back BACKWARD
+Mack BACKWARD
+baked BACKWARD
+Backpage BACKWARD
+stop STOP
+f*** STOP
+top STOP
+Stop STOP
+stop by STOP
+people STOP
+beautiful STOP
+Pizza STOP
+the f*** STOP
+before STOP
+go for what FORWARD
+local what FORWARD
+go for FORWARD
+go forward FORWARD
+go for work FORWARD
+go back BACKWARD
+the back BACKWARD
+the Beck BACKWARD
+The Back BACKWARD
+go bak BACKWARD
+phone locked FORWARD
+phone left FORWARD
+on what FORWARD
+on left FORWARD
+hola FORWARD
+hand END
+send END
+Hand END
+and END
+I hand END
+and END
+and I END
+and now END
+and it END
+and you END
+porn FORWARD
+forward FORWARD
+horn FORWARD
+Horn FORWARD
+41 FORWARD
+go back BACKWARD
+go bak BACKWARD
+Bob STOP
+Bob's STOP
+bobs STOP
+bob STOP
+f*** off STOP
+begin BEGIN
+again BEGIN
+the game BEGIN
+beginning BEGIN
+begins BEGIN
+and END
+hand END
+send END
+land END
+Panda END
+stop STOP
+Stop STOP
+I stop STOP
+stop it STOP
+stop by STOP
+begin BEGIN
+beginning BEGIN
+McGinn BEGIN
+again BEGIN
+McGuinn BEGIN
+forward FORWARD
+4 FORWARD
+Ford FORWARD
+for work FORWARD
+fourth FORWARD
+Mac BACKWARD
+back BACKWARD
+Mack BACKWARD
+smack BACKWARD
+mac BACKWARD
+and END
+hand END
+and another END
+and nothing END
+and another thing END
+again BEGIN
+begin BEGIN
+the game BEGIN
+look again BEGIN
+McGinn BEGIN
+no problem STOP
+no problemo STOP
+my follow STOP
+my follow up STOP
+no problems STOP
+950 the waffle STOP
+9500 the waffle STOP
+950 the waffle STOP
+mom 50 the waffle STOP
+950 the new awful STOP
+for wired FORWARD
+4 wired FORWARD
+4 wired FORWARD
+for Wired FORWARD
+4 Wired FORWARD
+team BEGIN
+Dean BEGIN
+Team BEGIN
+Jean BEGIN
+gene BEGIN

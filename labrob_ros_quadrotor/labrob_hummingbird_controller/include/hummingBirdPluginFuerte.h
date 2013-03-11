@@ -37,7 +37,7 @@ private:
 	float tagY[8];
 	int timer, timerSwitch;
 	int arIndex;
-	bool arFlag, switchFlag, smoothFlag;
+	bool arFlag, switchFlag, beginFlag, endFlag;
 	std::ofstream fileName;
     int artagNumber;
 

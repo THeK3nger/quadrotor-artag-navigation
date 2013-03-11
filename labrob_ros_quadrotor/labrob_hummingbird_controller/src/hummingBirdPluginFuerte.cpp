@@ -316,6 +316,35 @@ void HummingBirdPlugin::UpdateChild() {
 		PublishData();
 		if(recordLog) record_log_file();
 	}
+	
+	if (endFlag){
+		float distance= pow((desired_position.z - arZ),2)+pow((desired_position.x - arX),2)+pow((desired_position.y - arY),2);
+		cout << distance << endl;
+		if (distance<0.01 && !switchFlag){
+			cout<< "end" << endl;
+			arIndex++;
+			switchFlag = true;
+			timerSwitch=timer;
+		}
+		if(arIndex == 7){
+			endFlag=false;
+		}
+	}
+
+	if (beginFlag){
+		float distance= pow((desired_position.z - arZ),2)+pow((desired_position.x - arX),2)+pow((desired_position.y - arY),2);
+		cout << distance << endl;
+		if (distance<0.01 && !switchFlag){
+			cout<< "begin" << endl;
+			arIndex--;
+			switchFlag = true;
+			timerSwitch=timer;
+		}
+		if(arIndex == 0){
+			beginFlag=false;
+		}
+	}
+			
 }
 
 math::Vector3 HummingBirdPlugin::linearInterpol(double s){
@@ -378,7 +407,7 @@ void HummingBirdPlugin::attitude_control() {
 			p_error.x = zero_check(roll_ref  - current_rotation_euler.x);
 			p_error.y = zero_check(pitch_ref - current_rotation_euler.y);
 			p_error.z = zero_check(yaw_ref   - current_rotation_euler.z);
-			cout << p_error.z << endl;
+			//cout << p_error.z << endl;
 			
 			v_error = current_rotation_vel;
 			
@@ -662,8 +691,8 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 	 // }
 
 	  if(switchFlag && arIndex<8 && !arFlag){
-		cout<<arIndex<<endl;
-		cout<<switchFlag<<endl;
+		//cout<<arIndex<<endl;
+		//cout<<switchFlag<<endl;
 		//initial_position.x=msg->markers[arIndex+1].pose.pose.position.y;
 		//initial_position.y=msg->markers[arIndex+1].pose.pose.position.x;
 		//initial_position.z=msg->markers[arIndex+1].pose.pose.position.z;
@@ -685,15 +714,22 @@ void HummingBirdPlugin::switchCallback(const std_msgs::String::ConstPtr& msg) {
 	if(msg->data=="FORWARD" && arIndex<8){
 		arIndex++;
 		switchFlag = true;
-		smoothFlag = true;
 		timerSwitch=timer;
 	}else if(msg->data=="BACKWARD" && arIndex>0){
 		arIndex--;
 		switchFlag = true;
-		smoothFlag = true;
 		timerSwitch=timer;
+	}else if(msg->data=="BEGIN" && arIndex>0){
+		beginFlag=true;
+	}else if(msg->data=="END" && arIndex<8){
+		endFlag=true;
+		//fai altro
+	}else if(msg->data=="STOP" && arIndex>0){
+		beginFlag=false;
+		endFlag=false;
 	}
 }
+
 
 void HummingBirdPlugin::imuCallback(const geometry_msgs::Vector3Stamped::ConstPtr& msg) {
 	imuX=msg->vector.x;

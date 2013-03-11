@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+
+<node name="LCMServer" type="lcm.sh" pkg="gazebo_camera_test"/>
   
 <remap from="quad0/camera/image_raw" to="usb_cam/image_raw"/>
 <remap from="quad0/camera/camera_info" to="usb_cam/camera_info"/>
@@ -79,6 +81,11 @@
 		<param name="marker_pattern_list" type="string" value="$(find gazebo_camera_test)/data/multi"/>
 		<param name="threshold" type="int" value="100"/>
 </node>
+
+<node pkg="tablet_broker" type="broker.py" name="broker" output="screen" />
+
+<node pkg="quad_speech_control" type="controller.py" name="controller" output="screen" />
+
 
 </launch>
 
