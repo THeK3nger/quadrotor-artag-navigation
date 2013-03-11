@@ -45,17 +45,21 @@ public class SpeechActivity extends Activity implements OnClickListener, OnInitL
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             LocalBinder binder = (LocalBinder) service;
             lcmService = binder.getService();
+            System.out.println("CONNECTING SERVICE");
             lcmBound = true;
+            System.out.println(lcmBound);
         }
 
         public void onServiceDisconnected(ComponentName arg0) {
             lcmBound = false;
+            System.out.println("DISCONNECT SERVICE");
         }
     };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		System.out.println("SPEECH CREATE");
 		setContentView(R.layout.activity_speech);
 		
 		host=this.getIntent().getStringExtra("EXTRA_ADDRESS");
@@ -94,6 +98,7 @@ public class SpeechActivity extends Activity implements OnClickListener, OnInitL
 	
 	protected void onStart() {
         super.onStart();
+		System.out.println("SPEECH START");
         // Bind to LocalService
         Intent intent = new Intent(this, LcmService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -101,11 +106,13 @@ public class SpeechActivity extends Activity implements OnClickListener, OnInitL
 	
 	protected void onStop(){
 		super.onStop();
-		if (lcmBound){
-		 unbindService(mConnection);
-		 lcmBound=false;
-		 stopService(new Intent(this, LcmService.class));
-		}
+		System.out.println("SPEECH STOP");
+		System.out.println(lcmBound);
+		/*if (lcmBound){
+			unbindService(mConnection);
+			lcmBound=false;
+		}*/
+		stopService(new Intent(this, LcmService.class));
 		//CONTROLLARE SE QUI O ON DESTROY
 		if (mTts != null) {
             mTts.stop();
@@ -115,16 +122,17 @@ public class SpeechActivity extends Activity implements OnClickListener, OnInitL
 	
 	protected void onResume() {
         super.onResume();
+		System.out.println("SPEECH RESUME");
         Intent intent = new Intent(this, LcmService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 	
 	protected void onPause() {
 		super.onPause();
-		if (lcmBound){
+		/*if (lcmBound){
 			 unbindService(mConnection);
 			 lcmBound=false;
-		}
+		}*/
 	}
 	
     public void onUtteranceCompleted(String uttId) {
@@ -215,6 +223,7 @@ public class SpeechActivity extends Activity implements OnClickListener, OnInitL
 
     public void onInit(int status){
     	mTts.setLanguage(Locale.US);
+		System.out.println("SPEECH ONINIT");
     }
 
 }

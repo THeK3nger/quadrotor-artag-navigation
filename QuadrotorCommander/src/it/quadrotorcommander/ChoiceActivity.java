@@ -85,6 +85,7 @@ public class ChoiceActivity extends Activity {
 	@Override
     protected void onStart() {
         super.onStart();
+        System.out.println("CHOICE START");
         // Bind to LocalService
         Intent intent = new Intent(this, LcmService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -92,6 +93,15 @@ public class ChoiceActivity extends Activity {
 	
 	public void onStop(){
 		super.onStop();
+		System.out.println("CHOICE STOP");
+		if (lcmBound){
+		 unbindService(mConnection);
+		 lcmBound=false;
+		}
+	}
+	
+	public void onDestroy(){
+		super.onDestroy();
 		if (lcmBound){
 		 unbindService(mConnection);
 		 lcmBound=false;

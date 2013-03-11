@@ -14,6 +14,7 @@ public class MainActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		System.out.println("MAIN CREATE");
 		setContentView(R.layout.activity_main);
 		
 		Button startButton = (Button) findViewById(R.id.button1);

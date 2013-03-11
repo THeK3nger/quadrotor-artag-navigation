@@ -29,6 +29,7 @@ private:
     ros::Subscriber artagSubscriber;
     ros::Subscriber imuSubscriber;
     ros::Subscriber switchSubscriber;
+    ros::Publisher speechPub;
 
 	double arX,arY,arZ;
 	double accX,accY,accZ;

@@ -41,13 +41,13 @@ public class LcmService extends Service implements TextToSpeech.OnInitListener, 
 	@Override
 	public void onDestroy() {
 		lcm.close();
-		System.out.println("onDestroy");
+		System.out.println("LCM DESTROY");
 	//code to execute when the service is shutting down
 	}
 
 	@Override
 	public void onStart(Intent intent, int startid) {
-		System.out.println("onStart");
+		System.out.println("LCM ONSTART");
 	//code to execute when the service is starting up
 		try {
 			//host=intent.getStringExtra("EXTRA_ADDRESS");
@@ -87,7 +87,7 @@ public class LcmService extends Service implements TextToSpeech.OnInitListener, 
 	        
 
 	public void onInit(int status) {
-		System.out.println("INIT");
+		System.out.println("LCM INIT");
 		mTts.setLanguage(Locale.US);
 	}
 

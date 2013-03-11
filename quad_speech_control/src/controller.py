@@ -72,5 +72,4 @@ t1=Thread(target=myController.rosHandler)
 t2=Thread(target=myController.lcmHandler)
 
 t1.start()
-t2.start()               
-
+t2.start()

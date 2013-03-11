@@ -1,8 +1,8 @@
-
 #include <hummingBirdPluginFuerte.h>
 #include <ar_pose/ARMarkers.h>
 #include <stdlib.h>
 #include <math.h>
+#include <std_msgs/String.h>
 
 using std::cout;
 using std::endl;
@@ -258,6 +258,7 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
   artagSubscriber = rosNodeHandle.subscribe("ar_pose_marker", 5, &HummingBirdPlugin::artagCallback, this);
   imuSubscriber = rosNodeHandle.subscribe("/quad0/imu_vel", 5, &HummingBirdPlugin::imuCallback, this);
   switchSubscriber = rosNodeHandle.subscribe("/ar_marker_switch", 5, &HummingBirdPlugin::switchCallback, this);
+  speechPub = rosNodeHandle.advertise<std_msgs::String>("/text_to_speech", 5);
   fileName.open("markerLog.txt");
 
 	
@@ -711,19 +712,37 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 }
 
 void HummingBirdPlugin::switchCallback(const std_msgs::String::ConstPtr& msg) {
+
+	std_msgs::String speechMsg;
+	speechMsg.data = "I can't do it!";
 	if(msg->data=="FORWARD" && arIndex<8){
-		arIndex++;
-		switchFlag = true;
-		timerSwitch=timer;
-	}else if(msg->data=="BACKWARD" && arIndex>0){
-		arIndex--;
-		switchFlag = true;
-		timerSwitch=timer;
-	}else if(msg->data=="BEGIN" && arIndex>0){
-		beginFlag=true;
-	}else if(msg->data=="END" && arIndex<8){
-		endFlag=true;
-		//fai altro
+		if(arIndex<8){
+			arIndex++;
+			switchFlag = true;
+			timerSwitch=timer;
+		}else{
+		        speechPub.publish(speechMsg);
+		}
+	}else if(msg->data=="BACKWARD"){
+		if(arIndex>0){
+			arIndex--;
+			switchFlag = true;
+			timerSwitch=timer;
+		}else{	
+		        speechPub.publish(speechMsg);
+		}
+	}else if(msg->data=="BEGIN"){
+		if(arIndex>0){
+			beginFlag=true;
+		}else{
+		        speechPub.publish(speechMsg);
+                }
+	}else if(msg->data=="END"){
+		if(arIndex<8){
+			endFlag = true;
+		}else{			
+			speechPub.publish(speechMsg);
+		}
 	}else if(msg->data=="STOP" && arIndex>0){
 		beginFlag=false;
 		endFlag=false;
