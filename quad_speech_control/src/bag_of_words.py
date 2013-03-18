@@ -47,7 +47,7 @@ class bag_of_words:
 		return p
 	
 	def p_of_label(self, l):
-		p=(self.labels[l][0]+self.ls)/(self.number_of_sentences+ self.ls*len(self.labels))
+		p=(self.labels[l][0] + self.ls)/(self.number_of_sentences + self.ls*len(self.labels))
 		return p
 
 	def p_of_label_given_word(self,w,l):
@@ -65,7 +65,7 @@ class bag_of_words:
 			p=p*self.p_of_word_given_label(w,l)
 		return p
 	
-	def p_of_label_given_sentence(self,s,l):
+	def p_of_label_given_sentence(self,l,s):
 		num=self.p_of_sentence_given_label(s,l)*self.p_of_label(l)
 		den=0
 		for lab in  self.labels:
@@ -77,7 +77,7 @@ class bag_of_words:
 	def infer_label(self, sentence):
 		res = {}
 		for lab in  self.labels:
-			res[lab]=self.p_of_label_given_sentence(sentence,lab)
+			res[lab]=self.p_of_label_given_sentence(lab,sentence)
 		return res
 
 #asd = bag_of_words('corpus.txt', 1)
