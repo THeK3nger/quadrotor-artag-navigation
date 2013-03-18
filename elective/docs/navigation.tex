@@ -2,23 +2,23 @@
 
 \subsection{The navigation problem}
 
-Now that our quadrotor know how to do hovering on a single point, it is time to
+Now that our quadrotor knows how to do hovering on a single point, it is time to
 add more tags to make possible for it to follow a path.
 
 The quadrotor maintains a list of the existent tags ($S = (s_1,...,s_n)$) and
 a pointer (usually an integer index) to the current active tag. At any time we
-can order a change of quadrotor active tag and see it move towards the selected
-new active one.
+can order a change for quadrotor active tag and see it moves itself towards the 
+selected new active one.
 
 In our simulation we use a simple sequential path: the robot can follow only
-one direction, forward or backward. In general more complex path can be created
-(for example a tree-like path). The only limitation is that the quadrotor
-camera must see every possible next tag.
+one direction: forward or backward. In general it is possible to create more
+complex path (for example a tree-like path) with the only limitation that the 
+quadrotor camera must see every possible next tag.
 
 \subsection{Tag switch sequence}
 
 The most critical aspect of tag navigation is the \emph{tag switching}
-sequence. This sequence is composed by three parts:
+sequence. This sequence is composed by three steps:
 
 \begin{enumerate}
     \item Search for the next tag. Suppose that the quadrotor active tag is
