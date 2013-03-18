@@ -51,14 +51,6 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 	yaw_ref    = 0; //M_PI/2.0;
 	thrust_ref = 0;
 	
-	// Initialize PID gains sets: old gains for ROS electric
-// 	p_gain[0] = 1.0;
-// 	d_gain[0] = 0.25;
-// 	p_gain[1] = 5.0;
-// 	d_gain[1] = 8.0;
-// 	p_gain[2] = 25.0;
-// 	d_gain[2] = 10.0;
-	
 	// New gains for ROS fuerte
 	// [0] -> attitude control
 	// [1] -> position control
@@ -69,14 +61,6 @@ void HummingBirdPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
 	d_gain[1] = 8.0;
 	p_gain[2] = 25.0;
 	d_gain[2] = 10.0;
-	
-	
-// 	current_position.x = 0;
-// 	current_position.y = 0;
-// 	current_position.z = 0;
-//	desired_position.x = parent_model->GetLink()->GetWorldPose().pos.x;
-//	desired_position.y = parent_model->GetLink()->GetWorldPose().pos.y;
-//	desired_position.z = parent_model->GetLink()->GetWorldPose().pos.z;
 
 	desired_position.x = 0;
 	desired_position.y = 0;
@@ -296,19 +280,7 @@ void HummingBirdPlugin::UpdateChild() {
 	if (cur_time - last_update_time >= update_period){
 		last_update_time = cur_time;
 		if(arFlag && switchFlag){
-			double s = (timer-timerSwitch)/10000.0;
-			if (s>1){
-				arFlag = false;
-				switchFlag = false;
-				desired_position.z= 2;
-				desired_position.x = 0;
-				desired_position.y=0;
-			}else{
-				math::Vector3 tmp = linearInterpol(s);
-				desired_position.z=tmp.z;
-			       	desired_position.x=tmp.x;
-			       	desired_position.y=tmp.y;
-			}
+			tagSwitching();
 		}
 		//cout<<desired_position.x<<endl;
 		update_ground_truth();
@@ -318,6 +290,7 @@ void HummingBirdPlugin::UpdateChild() {
 		if(recordLog) record_log_file();
 	}
 	
+	// TODO: Move in separate functions.
 	if (endFlag){
 		float distance= pow((desired_position.z - arZ),2)+pow((desired_position.x - arX),2)+pow((desired_position.y - arY),2);
 		cout << distance << endl;
@@ -348,6 +321,25 @@ void HummingBirdPlugin::UpdateChild() {
 			
 }
 
+// Used during the "switch tag" phase.
+void tagSwitching() {
+	double s = (timer-timerSwitch)/10000.0;
+	if (s>1){
+		arFlag = false;
+		switchFlag = false;
+		desired_position.z= 2;
+		desired_position.x = 0;
+		desired_position.y=0;
+	}else{
+		math::Vector3 tmp = linearInterpol(s);
+		desired_position.z=tmp.z;
+			desired_position.x=tmp.x;
+			desired_position.y=tmp.y;
+	}
+}
+
+// Performs a simple linear interpolations between the global desired position and the initial positions.
+// TODO: Remove hardcoded global desired position.
 math::Vector3 HummingBirdPlugin::linearInterpol(double s){
 	math::Vector3 result;
 	result.x = 0*s+(1-s)*initial_position.x;
@@ -668,35 +660,19 @@ void HummingBirdPlugin::artagCallback(const ar_pose::ARMarkers::ConstPtr& msg) {
 	  
 		math::Vector3 tmp;
 		if(markerSearch(arIndex, msg, tmp)){
-	  	float diffX = pow(arX- tmp.x,2);//msg->markers[arIndex].pose.pose.position.y,2);
-	  	float diffY = pow(arY- tmp.y,2);//msg->markers[arIndex].pose.pose.position.x,2);
-	  	float diffZ = pow(arZ- tmp.z,2);//msg->markers[arIndex].pose.pose.position.z,2);
+	  		float diffX = pow(arX- tmp.x,2);
+	  		float diffY = pow(arY- tmp.y,2);
+	  		float diffZ = pow(arZ- tmp.z,2);
 
-	  //arX=msg->markers[arIndex].pose.pose.position.y*exp(-diffX)+arX*(1-exp(-diffX));
-	  //arY=msg->markers[arIndex].pose.pose.position.x*exp(-diffY)+arY*(1-exp(-diffY));
-	  //arZ=msg->markers[arIndex].pose.pose.position.z*exp(-diffZ)+arZ*(1-exp(-diffZ));
-		arX=tmp.x*exp(-diffX)+arX*(1-exp(-diffX));
-	  	arY=tmp.y*exp(-diffY)+arY*(1-exp(-diffY));
-	  	arZ=tmp.z*exp(-diffZ)+arZ*(1-exp(-diffZ));
+			// Perform an exponential smoothing between current and previous artag estimated values.
+			arX=tmp.x*exp(-diffX)+arX*(1-exp(-diffX));
+	  		arY=tmp.y*exp(-diffY)+arY*(1-exp(-diffY));
+	  		arZ=tmp.z*exp(-diffZ)+arZ*(1-exp(-diffZ));
 		}
-
-	 //Naive smoothing
-	 //
-	 // if((diffX < 0.2 && diffY < 0.2 && diffZ < 0.2) || timer < 5000 || smoothFlag){
-	 //       
-	 // 	arX=msg->markers[arIndex].pose.pose.position.y ;
-         // 	arY=msg->markers[arIndex].pose.pose.position.x;
-         // 	arZ=msg->markers[arIndex].pose.pose.position.z;
-	 //       if (smoothFlag) smoothFlag = false;
-	 //       	
-	 // }
 
 	  if(switchFlag && arIndex<8 && !arFlag){
 		//cout<<arIndex<<endl;
 		//cout<<switchFlag<<endl;
-		//initial_position.x=msg->markers[arIndex+1].pose.pose.position.y;
-		//initial_position.y=msg->markers[arIndex+1].pose.pose.position.x;
-		//initial_position.z=msg->markers[arIndex+1].pose.pose.position.z;
 		math::Vector3 tmp2;
 		if(markerSearch(arIndex, msg, tmp2)){
 			initial_position.x=tmp2.x;
@@ -754,14 +730,6 @@ void HummingBirdPlugin::imuCallback(const geometry_msgs::Vector3Stamped::ConstPt
 	imuX=msg->vector.x;
 	imuY=msg->vector.y;
 	imuZ=msg->vector.z;
-	
-	/*cout<<msg->vector.x<<endl;
-	cout<<msg->vector.y<<endl;
-	cout<<msg->vector.z<<endl;
-	cout<<"--"<<endl;*/
-
-
-
 }
 
 void HummingBirdPlugin::positionInputCallback(const geometry_msgs::Twist::ConstPtr& msg) {

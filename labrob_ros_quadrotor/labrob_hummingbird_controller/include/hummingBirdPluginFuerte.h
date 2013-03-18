@@ -31,15 +31,50 @@ private:
     ros::Subscriber switchSubscriber;
     ros::Publisher speechPub;
 
+	// The ARTag estimated position.
 	double arX,arY,arZ;
+
+	// An "accumulator value". It is used only in text output.
 	double accX,accY,accZ;
-	double imuX, imuY, imuZ; //velocità letta dalla imu
+
+	// The velocity value computed by the IMU.
+	double imuX, imuY, imuZ;
+
+	// Tag position for X and Y coordinate. We assume that the Z value is alway zero.
 	float tagX[8];
 	float tagY[8];
-	int timer, timerSwitch;
+
+	// Time elapsed since the simulation began.
+	int timer
+
+	// Time marker for the "switch fase" start.
+	int timerSwitch;
+
+	// The current active tag.
 	int arIndex;
-	bool arFlag, switchFlag, beginFlag, endFlag;
+
+	// Switch Flags.
+	//
+	// switchFlag is true when the user calls for a tag switching.
+	// arFlag is true if we have an updated estimation of the tags position AFTER the user calls for a tag switching.
+	//
+	// Due to that a "switch phase" begins if and only if switchFalg AND arFlag are true.
+	//
+	// switchFlag | arTag | EFFECT                   | CAUSE
+	// false      | false | Current target hovering  | Switch ends. Simulation starts.
+	// true       | false | Nothing                  | User calls for a tag switching.
+	// true       | true  | The switch begins!       | switchFlag is true AND the arTagCallback is called by ARTAG.
+	// false      | true  | INVALID STATE!
+	//
+	bool arFlag, switchFlag
+		
+	// This flags are used for the commands: "go to the last tag" and "go to the first tag".
+	bool beginFlag, endFlag;
+
+	// Output filename
 	std::ofstream fileName;
+
+	// The number of tags in the simulation.
     int artagNumber;
 
 	private:
@@ -126,6 +161,11 @@ private:
 		void height_Control_gravity_comp();
 		void height_Control_2(){}
 		void receive_commands();
+
+		/*!
+		 * Routine called in the update loop during the "switch phase".
+		 */
+		void tagSwitching();
 		
 		/// Position Control
 		void position_control();
