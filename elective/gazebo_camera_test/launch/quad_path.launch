@@ -30,8 +30,8 @@
   </group>
 
 <group if="$(arg gui)">
-  <param name="quad_urdf" command="$(find xacro)/xacro.py '$(find labrob_quad_gazebo)/models/quadrotorWithCameraFuerte.xacro'" />
-  <node name="spawn_quad0" pkg="gazebo" type="spawn_model" args="-urdf -param quad_urdf -model quad0 -x -0.1 -y -0.1 -z 2 -Y 1.57" respawn="false" output="screen" />
+  <!--param name="quad_urdf" command="$(find xacro)/xacro.py '$(find labrob_quad_gazebo)/models/quadrotorWithCameraFuerte.xacro'" />
+  <node name="spawn_quad0" pkg="gazebo" type="spawn_model" args="-urdf -param quad_urdf -model quad0 -x -0.1 -y -0.1 -z 2 -Y 1.57" respawn="false" output="screen" /-->
 
   <!-- send simple cube->
     <param name="robot_descriptionCube" command="$(find xacro)/xacro.py '$(find labrob_quad_gazebo)/models/camera.xacro'" /-->
