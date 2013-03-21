@@ -322,7 +322,7 @@ void HummingBirdPlugin::UpdateChild() {
 }
 
 // Used during the "switch tag" phase.
-void tagSwitching() {
+void HummingBirdPlugin::tagSwitching() {
 	double s = (timer-timerSwitch)/10000.0;
 	if (s>1){
 		arFlag = false;
