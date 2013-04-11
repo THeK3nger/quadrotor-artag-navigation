@@ -20,7 +20,7 @@ In Figure \ref{fig:plot} we show the result of the first simulation. It can be s
 \end{figure}
 
 
-To test the robustness of our approach and to better model real-environment conditions we ran a second simulation where we artificially introduced some noise. In particular the noise was added in two different ways, first we added both a Gaussian and a RGB noise on the image of the camera, Figure \ref{fig:artag} shows the difference of the perceived marker before and after the noise was added.
+To test the robustness of our approach and to better model real-environment conditions we ran a second simulation where we artificially introduced some disturbances. These disturbances were implemented in two different ways, first we added both a Gaussian and a RGB noise on the image of the camera, Figure \ref{fig:artag} shows the difference of the perceived marker before and after the noise was added.
 
  \begin{figure}[!h]
  \centering
@@ -34,7 +34,7 @@ To test the robustness of our approach and to better model real-environment cond
  \end{figure}
  
 
-\noindent The second type of noise was added directly on the estimate of the position of ARTAg by adding to it an error computed according to a Gaussian distribution (INSERIRE PARAMETRI). In Figure \ref{fig:plot_noise} we show the result of this second simulation.
+The second type of disturbance was introduced directly on the estimate of the position of ARTag by adding a Gaussian noise to it. To do so we computed a Gaussian distribution with $\mu=0$ and $\sigma^2=1$, according to the Box-Muller algorithm, scaled it by a constant factor $k=0.05$ and then we added it to the estimate by ARTag. In Figure \ref{fig:plot_noise} we show the result of this second simulation.
 
 \begin{figure}[h!]
   \centering
