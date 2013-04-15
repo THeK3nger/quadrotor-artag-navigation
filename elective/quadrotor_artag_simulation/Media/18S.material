@@ -1,0 +1,13 @@
+material elective/18S
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 18S.png
+      }
+    }
+  }
+}

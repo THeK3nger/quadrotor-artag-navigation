@@ -11,6 +11,7 @@ using std::endl;
 #define GRAV 9.81
 #define MANDATORY 1
 #define OPTIONAL  0
+#define GAUSSIAN_ERROR 1
 
 #define M_2PI 2 * M_PI
 using gazebo::physics::Link;
@@ -803,8 +804,12 @@ float HummingBirdPlugin::gaussianError(){
 	j=(rand()+1.0)/RAND_MAX;
 
 	float error = sqrt(-2*log(i))*cos(2*M_PI*j);
-
+	
+#if GAUSSIAN_ERROR
 	return error;
+#else
+	return 0.0;
+#endif
 }
 
 double HummingBirdPlugin::zero_check(double v){

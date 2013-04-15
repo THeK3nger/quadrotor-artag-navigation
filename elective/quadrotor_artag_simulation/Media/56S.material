@@ -1,0 +1,13 @@
+material elective/56S
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 56S.png
+      }
+    }
+  }
+}

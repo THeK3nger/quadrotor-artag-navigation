@@ -1,0 +1,13 @@
+material elective/artagS
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture artagS.png
+      }
+    }
+  }
+}

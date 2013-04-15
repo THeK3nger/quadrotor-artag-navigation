@@ -1,0 +1,20 @@
+<package>
+  <description brief="quadrotor_artag_simulation">
+  </description>
+  <author>Davide Aversa, Vittorio Perera</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/elective</url>
+
+    <!-- depend package="xacro"/ -->
+  <depend package="gazebo"/>
+  <depend package="gazebo_tools"/>
+  <depend package="gazebo_plugins"/>
+
+  <export>
+    <gazebo gazebo_media_path="${prefix}" />
+  </export>
+
+</package>
+
+

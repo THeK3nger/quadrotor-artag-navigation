@@ -1,0 +1,53 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfigure}
+
+\usepackage{placeins}
+\usepackage{cleveref}
+
+%opening
+\title{Visual based navigation for a voice controlled quadrotor.}
+\author{Davide Aversa - Vittorio Perera}
+
+\begin{document}
+
+\maketitle
+
+%\begin{comment}
+\begin{abstract}
+
+This report describes the simulation of a quadrotor navigation system based on
+ARTag marker recognition and a basic PD controller. The quadrotor can be
+controlled with voice commands through an Android application and the Google
+speech recognition interface.
+
+The goal of this work is to show the performance and the robustness of this
+system. The findings are encouraging and make possible a future implementation
+of this work on the real quadrotor.
+
+\end{abstract}
+%\end{comment}
+
+\input{intro}
+
+\input{hovering}
+
+\input{navigation}
+
+\input{vocal}
+
+\input{simulation}
+
+%\input{appendix}
+
+
+\bibliography{biblio}
+\bibliographystyle{plain}
+
+
+\end{document}
