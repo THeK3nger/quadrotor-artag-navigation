@@ -1,0 +1,14 @@
+<package>
+  <description brief="speech_msgs">
+
+    Package defining messages used with LCM 
+
+  </description>
+  <author>Vittorio Perera</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/speech_msgs</url>
+
+</package>
+
+

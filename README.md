@@ -58,11 +58,13 @@ To start the simulation you can use one of the two following command:
     roslaunch quadrotor_artag_simulation quad_path.launch
     roslaunch quadrotor_artag_simulation quad_path_noise.launch
 
-### The Andorid Software
+### The Android Software
 
 We assume you have an android enabled development environment (more information [here][3]). Import in your IDE the folder `QuadrotorCommander` as a project. To install the application on your devices simply press play. You can then start the application from the launcher on your devices.
 
 ### Speech Recognition and Learning Module
+
+TODO: rosmsg gen
 
 To enable the voice control of the quadrotor you first need to add the following line 
 
@@ -76,6 +78,7 @@ To run the LCMServer, just type:
 Last you can run the interface between LCM and ros by typing:
 
     rosrun quad_speech_control controller.py
+    rosrun tablet_broker borker.py
     
 
 

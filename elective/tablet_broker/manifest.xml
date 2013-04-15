@@ -1,0 +1,17 @@
+<package>
+  <description brief="tablet_broker">
+
+     Broker to exchange messages with a tablet using LCM
+
+  </description>
+  <author>Vittorio Perera</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/tablet_broker</url>
+  <depend package="rospy"/>
+  <depend package="speech_msgs"/>
+  <depend package="std_msgs"/>
+
+</package>
+
+

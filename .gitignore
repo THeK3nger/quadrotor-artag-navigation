@@ -4,6 +4,8 @@ usb_cam
 build
 bin
 lib
+msg_gen
+speech_msgs/src
 *.*~
 *~
 .svn
@@ -17,3 +19,4 @@ lib
 *.bbl
 *.blg
 .classpath
+
