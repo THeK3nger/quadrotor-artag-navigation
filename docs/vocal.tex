@@ -70,11 +70,11 @@ The solution adopted was to use a Bayes Classifier on the speech output rather t
 \begin{itemize}
   \item[] $W_i$ is the i-th words of a sentence $S$
   \item[] $k$ is an additive smoothing parameter
-  \item[] $S_L$ is the number of sentences in the corpus labeled as L
+  \item[] $S_L$ is the number of sentences in the corpus labelled as L
   \item[] $S_{tot}$ is the total number of sentences in the corpus
   \item[] $L_{tot}$ is the total number of label
   \item[] $W_L$ is the number of occurrence of word W in label L
-  \item[] $W_{Ltot}$ is the number of different word labeled as L
+  \item[] $W_{Ltot}$ is the number of different word labelled as L
 \end{itemize}
 
 Eq \ref{eq:Bayes3}, \ref{eq:Bayes4} shows how an additive smoothing has been applied when computing probabilities. This is a common practice in the field of Natural Language Processing as it accounts for words not present in the corpus; on the other hand using an additive smoothing implies that we will never get a 0 probability for any sentence-label couple. Therefore we could end up inferring a label as the correct one even if its probability is very low. For this reason when the maximum probability label for all the interpretations of a command is below a given threshold the inference is rejected and the system ask the user to give the correct interpretation. When this happens the tablet prompts the user saying \emph{``I am sorry I did not understand, please select one of the following''} and shows a different frame, see Figure \ref{fig:tablet_choice}.
