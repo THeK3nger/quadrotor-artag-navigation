@@ -50,8 +50,8 @@ public class LcmService extends Service implements TextToSpeech.OnInitListener, 
 		System.out.println("LCM ONSTART");
 	//code to execute when the service is starting up
 		try {
-			//host=intent.getStringExtra("EXTRA_ADDRESS");
-			host = "10.0.1.87";
+			host=intent.getStringExtra("EXTRA_ADDRESS");
+			//host = "10.0.1.87";
         	lcm = new LCM("tcpq://"+host+":7700");
         	lcm.subscribe("SPEAK", this);
             lcm.subscribe("CONTROL", this);
